@@ -120,5 +120,29 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
     }
+
+    // Default +30 Days Deadline for Add Job modal
+    const addDeadlineInput = document.getElementById('addDeadline');
+    if (addDeadlineInput && !addDeadlineInput.value) {
+        const nextMonth = new Date();
+        nextMonth.setDate(nextMonth.getDate() + 30);
+        addDeadlineInput.value = nextMonth.toISOString().split('T')[0];
+    }
+
+    // Auto-open Add Job Modal if requested via URL
+    if (window.location.search.indexOf('action=new') !== -1 || window.location.hash === '#addJobModal') {
+        const jobModalEl = document.getElementById('addJobModal');
+        if (jobModalEl && typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+            bootstrap.Modal.getOrCreateInstance(jobModalEl).show();
+        }
+    }
+
+    // Auto-open Add Company Modal if requested via URL
+    if (window.location.search.indexOf('action=new-company') !== -1 || window.location.hash === '#addCompanyModal') {
+        const companyModalEl = document.getElementById('addCompanyModal');
+        if (companyModalEl && typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+            bootstrap.Modal.getOrCreateInstance(companyModalEl).show();
+        }
+    }
 });
 

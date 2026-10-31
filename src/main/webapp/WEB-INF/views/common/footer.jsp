@@ -54,18 +54,7 @@
     </div>
 </footer>
 
-<!-- Bootstrap 5 Bundle JS (Includes Popper) - Local First with CDN Fallback -->
-<script src="${pageContext.request.contextPath}/assets/js/bootstrap.bundle.min.js"></script>
-<script>
-    if (typeof bootstrap === 'undefined') {
-        var cdnScript = document.createElement('script');
-        cdnScript.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js';
-        cdnScript.crossOrigin = 'anonymous';
-        document.head.appendChild(cdnScript);
-    }
-</script>
-
-<!-- Custom JS -->
+<!-- Custom Application JavaScript -->
 <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 </body>
 </html>

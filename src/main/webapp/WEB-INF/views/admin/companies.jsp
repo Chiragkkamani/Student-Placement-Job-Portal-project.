@@ -17,7 +17,7 @@
                             contacts</p>
                     </div>
                     <button type="button" class="btn btn-primary btn-sm d-inline-flex align-items-center gap-1"
-                        data-bs-toggle="modal" data-bs-target="#addCompanyModal" onclick="openAddCompanyModal()">
+                        data-bs-toggle="modal" data-bs-target="#addCompanyModal">
                         <i class="bi bi-plus-lg me-1"></i> Add New Company
                     </button>
                 </div>
@@ -231,41 +231,5 @@
                     </div>
                 </div>
             </div>
-
-            <script>
-                function openAddCompanyModal() {
-                    const modalEl = document.getElementById('addCompanyModal');
-                    if (!modalEl) return;
-                    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-                        const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
-                        modal.show();
-                    } else {
-                        modalEl.style.display = 'block';
-                        modalEl.classList.add('show');
-                        document.body.classList.add('modal-open');
-                        let backdrop = document.getElementById('modalBackdropFallback');
-                        if (!backdrop) {
-                            backdrop = document.createElement('div');
-                            backdrop.id = 'modalBackdropFallback';
-                            backdrop.className = 'modal-backdrop fade show';
-                            document.body.appendChild(backdrop);
-                        }
-                    }
-                }
-
-                function closeAddCompanyModal() {
-                    const modalEl = document.getElementById('addCompanyModal');
-                    if (!modalEl) return;
-                    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-                        const modal = bootstrap.Modal.getInstance(modalEl);
-                        if (modal) modal.hide();
-                    }
-                    modalEl.style.display = 'none';
-                    modalEl.classList.remove('show');
-                    document.body.classList.remove('modal-open');
-                    const backdrop = document.getElementById('modalBackdropFallback');
-                    if (backdrop) backdrop.remove();
-                }
-            </script>
 
             <jsp:include page="../common/footer.jsp" />

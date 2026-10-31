@@ -16,7 +16,7 @@
             <p class="text-muted small mb-0">Post, configure eligibility criteria, and manage recruitment openings</p>
         </div>
         <button type="button" class="btn btn-primary btn-sm d-inline-flex align-items-center gap-1" 
-                data-bs-toggle="modal" data-bs-target="#addJobModal" onclick="openAddJobModal()">
+                data-bs-toggle="modal" data-bs-target="#addJobModal">
             <i class="bi bi-plus-lg me-1"></i> Post New Job Opening
         </button>
     </div>
@@ -204,12 +204,12 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Application Deadline <span class="text-danger">*</span></label>
-                            <input type="date" name="deadline" class="form-control" required>
+                            <input type="date" name="deadline" id="addDeadline" class="form-control" required>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeAddJobModal()">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Publish Job Opening</button>
                 </div>
             </form>
@@ -287,42 +287,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    function openAddJobModal() {
-        const modalEl = document.getElementById('addJobModal');
-        if (!modalEl) return;
-        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-            const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
-            modal.show();
-        } else {
-            modalEl.style.display = 'block';
-            modalEl.classList.add('show');
-            document.body.classList.add('modal-open');
-            let backdrop = document.getElementById('modalBackdropFallback');
-            if (!backdrop) {
-                backdrop = document.createElement('div');
-                backdrop.id = 'modalBackdropFallback';
-                backdrop.className = 'modal-backdrop fade show';
-                document.body.appendChild(backdrop);
-            }
-        }
-    }
-
-    function closeAddJobModal() {
-        const modalEl = document.getElementById('addJobModal');
-        if (!modalEl) return;
-        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-            const modal = bootstrap.Modal.getInstance(modalEl);
-            if (modal) modal.hide();
-        }
-        modalEl.style.display = 'none';
-        modalEl.classList.remove('show');
-        document.body.classList.remove('modal-open');
-        const backdrop = document.getElementById('modalBackdropFallback');
-        if (backdrop) backdrop.remove();
-    }
-</script>
 
 <jsp:include page="../common/footer.jsp" />
 

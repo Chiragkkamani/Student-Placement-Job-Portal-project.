@@ -18,6 +18,14 @@
     
     <!-- Custom Portal CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
+
+    <!-- Bootstrap 5 Bundle JS (Includes Popper - Synchronous Local First with CDN Fallback) -->
+    <script src="${pageContext.request.contextPath}/assets/js/bootstrap.bundle.min.js"></script>
+    <script>
+        if (typeof bootstrap === 'undefined') {
+            document.write('<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"><\/script>');
+        }
+    </script>
 </head>
 <body>
 

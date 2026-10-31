@@ -19,7 +19,7 @@
             <a href="${pageContext.request.contextPath}/admin/users" class="btn btn-dark btn-sm">
                 <i class="bi bi-person-gear me-1"></i> Manage Accounts
             </a>
-            <a href="${pageContext.request.contextPath}/admin/jobs" class="btn btn-primary btn-sm">
+            <a href="${pageContext.request.contextPath}/admin/jobs?action=new" class="btn btn-primary btn-sm">
                 <i class="bi bi-plus-lg me-1"></i> Post New Job
             </a>
             <a href="${pageContext.request.contextPath}/admin/companies" class="btn btn-outline-primary btn-sm">
