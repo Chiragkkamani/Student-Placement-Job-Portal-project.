@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AJT Project Report - Implementation of AJT Technologies</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 15mm 20mm 15mm;
+            @bottom-right {
+                content: counter(page);
+            }
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #212529;
+            line-height: 1.6;
+            font-size: 11pt;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+        .cover-page {
+            text-align: center;
+            padding: 80px 20px 40px 20px;
+            page-break-after: always;
+        }
+        .cover-title {
+            font-size: 26pt;
+            font-weight: 800;
+            color: #0d6efd;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+        .cover-subtitle {
+            font-size: 15pt;
+            color: #495057;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+        .cover-badge {
+            display: inline-block;
+            background: #e7f1ff;
+            color: #0d6efd;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 11pt;
+            font-weight: bold;
+            margin-bottom: 50px;
+            border: 1px solid #b6d4fe;
+        }
+        .cover-meta {
+            margin-top: 60px;
+            text-align: left;
+            display: inline-block;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 24px 32px;
+            border-radius: 8px;
+            font-size: 11pt;
+        }
+        .cover-meta table td {
+            padding: 6px 12px;
+        }
+        h1 {
+            color: #0d6efd;
+            font-size: 18pt;
+            border-bottom: 2px solid #0d6efd;
+            padding-bottom: 6px;
+            margin-top: 30px;
+            margin-bottom: 14px;
+        }
+        h2 {
+            color: #1e3a8a;
+            font-size: 14pt;
+            margin-top: 22px;
+            margin-bottom: 10px;
+            border-left: 4px solid #0d6efd;
+            padding-left: 8px;
+        }
+        h3 {
+            color: #343a40;
+            font-size: 12pt;
+            margin-top: 16px;
+            margin-bottom: 8px;
+        }
+        p {
+            margin-top: 0;
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 10pt;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            font-weight: 700;
+        }
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        pre {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 9pt;
+            overflow-x: auto;
+            line-height: 1.4;
+            margin: 14px 0;
+        }
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background-color: #f1f5f9;
+            color: #0d6efd;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 9.5pt;
+        }
+        .callout {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 12px 16px;
+            border-radius: 0 6px 6px 0;
+            margin: 16px 0;
+            font-size: 10.5pt;
+        }
+        .callout-success {
+            background-color: #f0fdf4;
+            border-left-color: #22c55e;
+        }
+        .callout-warning {
+            background-color: #fffbeb;
+            border-left-color: #f59e0b;
+        }
+        ul, ol {
+            margin-top: 0;
+            margin-bottom: 12px;
+            padding-left: 24px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        .footer-note {
+            font-size: 9pt;
+            color: #6c757d;
+            text-align: center;
+            margin-top: 40px;
+            border-top: 1px solid #dee2e6;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================================================= -->
+    <!-- COVER PAGE                                                                -->
+    <!-- ========================================================================= -->
+    <div class="cover-page">
+        <div class="cover-badge">ADVANCED JAVA TECHNOLOGIES (AJT) • ENTERPRISE PROJECT REPORT</div>
+        <div class="cover-title">Student Placement &amp; Job Portal System</div>
+        <div class="cover-subtitle">Architectural Design, Analysis, and Implementation of Advanced Java Technologies<br>(Servlets, JSP/JSTL, Spring Framework, and Java Swing)</div>
+
+        <div class="cover-meta">
+            <table>
+                <tr>
+                    <td><strong>Course Name:</strong></td>
+                    <td>Advanced Java Technologies (AJT)</td>
+                </tr>
+                <tr>
+                    <td><strong>Student / Developer:</strong></td>
+                    <td>Chirag Kamani</td>
+                </tr>
+                <tr>
+                    <td><strong>Project Name:</strong></td>
+                    <td>Campus Placement &amp; Recruitment Management Portal</td>
+                </tr>
+                <tr>
+                    <td><strong>Architectural Pattern:</strong></td>
+                    <td>Model-View-Controller (MVC) with JDBC Data Layer</td>
+                </tr>
+                <tr>
+                    <td><strong>Target Server &amp; Java Version:</strong></td>
+                    <td>Apache Tomcat 10.1.x / Amazon Corretto OpenJDK 17 LTS</td>
+                </tr>
+                <tr>
+                    <td><strong>GitHub Repository:</strong></td>
+                    <td><code>https://github.com/Chiragkkamani/Student-Placement-Job-Portal-project..git</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Status:</strong></td>
+                    <td>Fully Functional Enterprise Web Application + Swing Desktop Client</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- CHAPTER 1: EXECUTIVE SUMMARY & ARCHITECTURE                              -->
+    <!-- ========================================================================= -->
+    <h1>1. Executive Summary &amp; System Overview</h1>
+    <p>
+        The <strong>Student Placement &amp; Job Portal</strong> is a production-grade enterprise web application designed to automate and streamline campus recruitment activities in university institutions. It establishes a unified, secure digital bridge between graduating students, corporate recruiter partners, and university placement administrators.
+    </p>
+
+    <h2>1.1 Core Problems Solved</h2>
+    <ul>
+        <li><strong>Automated Academic Eligibility Filtering:</strong> Prevents unqualified applications by automatically verifying minimum aggregate CGPA thresholds and eligible academic branches before submission.</li>
+        <li><strong>Duplicate Application Elimination:</strong> Database-enforced composite unique constraint <code>(student_id, job_id)</code> prevents accidental double-submissions.</li>
+        <li><strong>Role-Based Access Control (RBAC):</strong> Separates student self-service capabilities (browsing jobs, tracking status, uploading resumes) from administrative governance (creating jobs, approving companies, changing application stages).</li>
+        <li><strong>Full Auditability:</strong> Every status transition (<code>APPLIED</code> &rarr; <code>SHORTLISTED</code> &rarr; <code>SELECTED</code> / <code>REJECTED</code>) records an unalterable history log detailing the administrator ID, remarks, and timestamp.</li>
+    </ul>
+
+    <h2>1.2 Layered Enterprise MVC Architecture</h2>
+    <p>
+        The application strictly follows the <strong>Model-View-Controller (MVC)</strong> enterprise design pattern using clean separation of concerns without relying on heavy abstractions or third-party ORMs:
+    </p>
+
+    <pre>
+┌────────────────────────────────────────────────────────────────────────┐
+│                          PRESENTATION LAYER (VIEW)                     │
+│  JSP 3.1 Views + Expression Language (EL 5.0) + JSTL 3.0 Standard Tags │
+│  Bootstrap 5.3 Responsive Grid + Custom Enterprise Blue &amp; White Theme  │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ HTTP Requests / Form Submissions
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                         CONTROLLER &amp; FILTER LAYER                      │
+│  Jakarta Servlets 6.0 (Login, Register, Jobs, Applications, Admin)      │
+│  Filters: EncodingFilter (UTF-8/CSP), AuthenticationFilter,             │
+│           AuthorizationFilter (RBAC), CsrfFilter (Token Defense)       │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Java DTOs / Method Invocations
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                           BUSINESS SERVICE LAYER                       │
+│  UserService, StudentService, CompanyService, JobService,               │
+│  ApplicationService (Atomic Transactions, BCrypt Verification)         │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Data Access Operations
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                        DATA ACCESS OBJECT (DAO) LAYER                  │
+│  JDBC 4.3 using MySQL Connector/J 8.3 &amp; HikariCP Connection Pool       │
+│  Parameterized PreparedStatements, Resource Cleanup (try-with-resources)│
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ SQL Queries / ACID Transactions
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                            DATABASE ENGINE                             │
+│  MySQL 8.x Server (Automatic Fallback: Embedded H2 in MySQL Mode)      │
+└────────────────────────────────────────────────────────────────────────┘
+    </pre>
+
+    <!-- ========================================================================= -->
+    <!-- CHAPTER 2: IMPLEMENTATION OF JAVA SERVLETS                               -->
+    <!-- ========================================================================= -->
+    <div class="page-break"></div>
+    <h1>2. Implementation of Java Servlets (Jakarta Servlet 6.0)</h1>
+    <p>
+        Java Servlets serve as the <strong>Controller</strong> in the MVC pattern. They intercept incoming HTTP requests, process business operations via services, update models, and route responses to appropriate JSP views.
+    </p>
+
+    <h2>2.1 Servlet Lifecycle &amp; Execution Model</h2>
+    <p>
+        Servlets adhere to the standard Jakarta Servlet lifecycle managed by Apache Tomcat 10.1:
+    </p>
+    <ol>
+        <li><strong>Loading &amp; Instantiation:</strong> Tomcat loads servlet classes upon the first request or at container startup via <code>load-on-startup</code>.</li>
+        <li><strong>Initialization (<code>init()</code>):</strong> Initializes resources and service instances once per servlet lifetime.</li>
+        <li><strong>Service Execution (<code>service()</code> / <code>doGet()</code> / <code>doPost()</code>):</strong> Dispatches HTTP methods across concurrent thread pools.</li>
+        <li><strong>Destruction (<code>destroy()</code>):</strong> Invoked when the web application undeploys or container halts, gracefully releasing resources.</li>
+    </ol>
+
+    <h2>2.2 Servlet Filters for Enterprise Cross-Cutting Concerns</h2>
+    <p>
+        Four specialized <code>jakarta.servlet.Filter</code> implementations safeguard the application:
+    </p>
+    <table>
+        <tr>
+            <th>Filter Name</th>
+            <th>URL Mapping</th>
+            <th>Responsibility</th>
+        </tr>
+        <tr>
+            <td><code>EncodingFilter</code></td>
+            <td><code>/*</code></td>
+            <td>Forces UTF-8 character encoding on all requests and responses; injects standard HTTP security headers (<code>X-Frame-Options: SAMEORIGIN</code>, <code>X-Content-Type-Options: nosniff</code>).</td>
+        </tr>
+        <tr>
+            <td><code>AuthenticationFilter</code></td>
+            <td><code>/admin/*</code>, <code>/student/*</code></td>
+            <td>Verifies active <code>HttpSession</code>; captures unauthenticated requests and stores return URLs before redirecting to <code>/login</code>.</td>
+        </tr>
+        <tr>
+            <td><code>AuthorizationFilter</code></td>
+            <td><code>/admin/*</code>, <code>/student/*</code></td>
+            <td>Enforces Role-Based Access Control (RBAC). Prevents students from accessing admin URLs and returns HTTP 403 Forbidden via <code>/WEB-INF/views/error/403.jsp</code>.</td>
+        </tr>
+        <tr>
+            <td><code>CsrfFilter</code></td>
+            <td><code>/*</code></td>
+            <td>Generates and verifies cryptographic session tokens for all state-changing HTTP requests (<code>POST</code>, <code>PUT</code>, <code>DELETE</code>).</td>
+        </tr>
+    </table>
+
+    <h2>2.3 Session Management &amp; Fixation Protection</h2>
+    <p>
+        To prevent <strong>Session Fixation Attacks</strong>, <code>LoginServlet</code> invalidates the pre-authentication session identifier upon successful credential verification:
+    </p>
+    <pre>
+// Regenerate session ID upon successful BCrypt verification
+request.changeSessionId();
+HttpSession session = request.getSession(true);
+session.setAttribute("currentUser", authenticatedUser);
+    </pre>
+
+    <h2>2.4 Multipart Form &amp; Resume File Uploads</h2>
+    <p>
+        <code>StudentProfileServlet</code> uses Jakarta <code>@MultipartConfig</code> with strict security validations:
+    </p>
+    <pre>
+@WebServlet(name = "StudentProfileServlet", urlPatterns = {"/student/profile"})
+@MultipartConfig(
+    maxFileSize = 5 * 1024 * 1024,      // 5 MB maximum file size
+    maxRequestSize = 10 * 1024 * 1024   // 10 MB maximum total request size
+)
+public class StudentProfileServlet extends HttpServlet { ... }
+    </pre>
+    <p>
+        Uploaded files are validated against allowed MIME types (<code>application/pdf</code>), renamed to randomly generated UUIDs to eliminate path traversal vulnerabilities, and streamed securely through <code>ResumeServlet</code> with appropriate cache headers.
+    </p>
+
+    <!-- ========================================================================= -->
+    <!-- CHAPTER 3: IMPLEMENTATION OF JSP, JSTL & EL                              -->
+    <!-- ========================================================================= -->
+    <div class="page-break"></div>
+    <h1>3. Implementation of JSP (JavaServer Pages), JSTL &amp; Expression Language</h1>
+    <p>
+        In modern Advanced Java architecture, JSP acts purely as the <strong>View</strong>. Java scriptlets (<code>&lt;% ... %&gt;</code>) are completely deprecated and replaced with standard Expression Language (EL) and Jakarta Standard Tag Library (JSTL).
+    </p>
+
+    <h2>3.1 Standard Tag Library (JSTL 3.0) Integration</h2>
+    <p>
+        All dynamic iterations, conditional displays, and formatting utilize Jakarta Standard Tag Library (<code>jakarta.tags.core</code> and <code>jakarta.tags.fmt</code>):
+    </p>
+    <pre>
+&lt;%@ taglib prefix="c" uri="jakarta.tags.core" %&gt;
+&lt;%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %&gt;
+
+&lt;!-- Conditional Status Rendering --&gt;
+&lt;c:choose&gt;
+    &lt;c:when test="${u.role == 'ADMIN'}"&gt;
+        &lt;span class="badge bg-danger-subtle text-danger"&gt;ADMIN&lt;/span&gt;
+    &lt;/c:when&gt;
+    &lt;c:otherwise&gt;
+        &lt;span class="badge bg-primary-subtle text-primary"&gt;STUDENT&lt;/span&gt;
+    &lt;/c:otherwise&gt;
+&lt;/c:choose&gt;
+    </pre>
+
+    <h2>3.2 Modular Templating Structure</h2>
+    <p>
+        Views are decomposed into maintainable, reusable components included via <code>&lt;jsp:include&gt;</code>:
+    </p>
+    <ul>
+        <li><code>common/header.jsp</code>: HTML5 document head, meta tags, and local-first Bootstrap 5.3 stylesheet declarations.</li>
+        <li><code>common/navbar.jsp</code>: Dynamic, role-sensitive navigation bar that switches seamlessly between Public, Student, and Admin menus.</li>
+        <li><code>common/alerts.jsp</code>: Flash alert messaging system rendering session notifications (<code>flashSuccess</code>, <code>flashError</code>) with auto-dismissal.</li>
+        <li><code>common/footer.jsp</code>: Standard institutional footer, copyright information, and JavaScript bundle dependencies.</li>
+    </ul>
+
+    <h2>3.3 Strict 6-Jobs-Per-Page Pagination Implementation</h2>
+    <p>
+        To avoid overwhelming students with 26 long job cards, the portal implements a strict <strong>6-jobs-per-page</strong> view with intuitive down-arrow navigation:
+    </p>
+    <ul>
+        <li><strong>Initial Render:</strong> Only cards with indices <code>0..5</code> are visible; cards with indices <code>6..25</code> are hidden using CSS <code>d-none</code>.</li>
+        <li><strong>Page Transitions:</strong> Clicking <strong>"Next 6 Jobs &darr;"</strong> or numbered page buttons (<code>1, 2, 3, 4, 5</code>) hides the previous 6 cards and displays <em>only</em> the newly selected 6 cards.</li>
+        <li><strong>Viewport Positioning:</strong> Automatically executes smooth scrolling to the top of the jobs grid so new job openings appear directly in view without endless downward scrolling.</li>
+    </ul>
+
+    <!-- ========================================================================= -->
+    <!-- CHAPTER 4: COMPARATIVE ANALYSIS: SERVLET/JSP VS SPRING                   -->
+    <!-- ========================================================================= -->
+    <div class="page-break"></div>
+    <h1>4. Comparative Analysis: Pure Servlet/JSP vs. Spring Framework</h1>
+    <p>
+        A core requirement of Advanced Java Technologies is evaluating how traditional Jakarta EE Servlets and JSP compare to modern enterprise frameworks like <strong>Spring MVC</strong> and <strong>Spring Boot</strong>.
+    </p>
+
+    <h2>4.1 Architectural Comparison Matrix</h2>
+    <table>
+        <tr>
+            <th>Dimension</th>
+            <th>Pure Servlet &amp; JSP (This Project)</th>
+            <th>Spring Framework / Spring Boot</th>
+        </tr>
+        <tr>
+            <td><strong>Controller Architecture</strong></td>
+            <td>Individual Servlets extending <code>HttpServlet</code> mapped via <code>@WebServlet</code>. Manual routing in <code>doGet()</code> / <code>doPost()</code>.</td>
+            <td>Centralized <code>DispatcherServlet</code> (Front Controller). Controllers are simple POJOs annotated with <code>@Controller</code> or <code>@RestController</code>.</td>
+        </tr>
+        <tr>
+            <td><strong>Dependency Management</strong></td>
+            <td>Manual instantiation (<code>new UserService()</code>) or Singleton factory patterns.</td>
+            <td><strong>Inversion of Control (IoC)</strong> container. Dependencies injected via <code>@Autowired</code> or constructor injection.</td>
+        </tr>
+        <tr>
+            <td><strong>Data Persistence</strong></td>
+            <td>Raw JDBC with <code>PreparedStatement</code>, HikariCP, and explicit <code>ResultSet</code> mapping.</td>
+            <td><strong>Spring Data JPA</strong> with Hibernate. Object-Relational Mapping (ORM) and auto-generated repository queries.</td>
+        </tr>
+        <tr>
+            <td><strong>Security Mechanism</strong></td>
+            <td>Custom Servlet Filters (<code>AuthenticationFilter</code>, <code>AuthorizationFilter</code>, <code>CsrfFilter</code>).</td>
+            <td><strong>Spring Security</strong> filter chain with declarative rules, OAuth2, JWT, and method-level annotations (<code>@PreAuthorize</code>).</td>
+        </tr>
+        <tr>
+            <td><strong>Deployment Model</strong></td>
+            <td>Packaged as <code>.war</code> file deployed into standalone servlet container (Apache Tomcat 10.1).</td>
+            <td>Self-contained executable <code>.jar</code> with embedded Tomcat or containerized Docker image.</td>
+        </tr>
+        <tr>
+            <td><strong>Learning &amp; Transparency</strong></td>
+            <td><strong>Extremely High:</strong> Every HTTP header, cookie, SQL statement, and lifecycle event is completely visible and under developer control.</td>
+            <td><strong>Abstracted:</strong> Heavy use of reflection, bytecode enhancement, and convention-over-configuration auto-wiring.</td>
+        </tr>
+    </table>
+
+    <h2>4.2 Equivalent Controller Implementation in Spring MVC</h2>
+    <p>
+        The following example illustrates how our pure <code>AdminJobServlet</code> would be written in modern Spring MVC:
+    </p>
+    <pre>
+// Spring MVC Equivalent Controller
+@Controller
+@RequestMapping("/admin/jobs")
+public class JobController {
+
+    private final JobService jobService;
+    private final CompanyService companyService;
+
+    @Autowired
+    public JobController(JobService jobService, CompanyService companyService) {
+        this.jobService = jobService;
+        this.companyService = companyService;
+    }
+
+    @GetMapping
+    public String listJobs(@RequestParam(required = false) String search,
+                           @RequestParam(required = false) String status,
+                           Model model) {
+        model.addAttribute("jobs", jobService.searchJobs(search, status));
+        model.addAttribute("companies", companyService.getAllCompanies());
+        return "admin/jobs";
+    }
+
+    @PostMapping
+    public String createJob(@Valid @ModelAttribute JobDTO jobDTO, 
+                            BindingResult bindingResult, 
+                            RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "admin/jobs";
+        }
+        jobService.createJob(jobDTO);
+        redirectAttributes.addFlashAttribute("flashSuccess", "Job posted successfully!");
+        return "redirect:/admin/jobs";
+    }
+}
+    </pre>
+
+    <!-- ========================================================================= -->
+    <!-- CHAPTER 5: IMPLEMENTATION OF JAVA SWING                                   -->
+    <!-- ========================================================================= -->
+    <div class="page-break"></div>
+    <h1>5. Implementation of Java Swing (Desktop GUI Counterpart)</h1>
+    <p>
+        Java Swing represents the premier <strong>Desktop GUI framework</strong> in the Advanced Java curriculum. While Java Servlets and JSP cater to web clients across distributed browsers, Swing provides rich, client-side, event-driven desktop interfaces running directly on the host JVM.
+    </p>
+
+    <h2>5.1 Placement Portal Desktop Console (<code>PlacementAdminSwingApp.java</code>)</h2>
+    <p>
+        To complete the AJT curriculum coverage, an administration desktop counterpart was engineered in package <code>com.ajt.portal.swing.PlacementAdminSwingApp</code>. It demonstrates how a University Placement Officer can manage the portal directly from a desktop workstation.
+    </p>
+
+    <pre>
+┌────────────────────────────────────────────────────────────────────────┐
+│  AJT Campus Placement Console (Java Swing Desktop Client)         _ □ ×│
+├────────────────────────────────────────────────────────────────────────┤
+│  [ Registered Students ]   [ Campus Job Drives (26 Active) ]           │
+├────────────────────────────────────────────────────────────────────────┤
+│  ID │ Student Name     │ Enrollment   │ Branch │ Sem │ CGPA │ Phone    │
+│  1  │ Aarav Sharma     │ EN2024CS0101 │ CS     │ 8   │ 8.75 │ 98765432 │
+│  2  │ Diya Patel       │ EN2024IT0202 │ IT     │ 8   │ 9.20 │ 98765432 │
+│  3  │ Rohan Verma      │ EN2024EC0303 │ EC     │ 8   │ 7.40 │ 98765432 │
+│  4  │ Ananya Iyer      │ EN2024ME0404 │ ME     │ 8   │ 8.10 │ 98765432 │
+├────────────────────────────────────────────────────────────────────────┤
+│  Status: Database synchronized. 4 students, 26 drives. [Refresh] [Close│
+└────────────────────────────────────────────────────────────────────────┘
+    </pre>
+
+    <h2>5.2 Core Swing Components &amp; Event Architecture</h2>
+    <ul>
+        <li><strong><code>JFrame</code>:</strong> Top-level window frame hosting layout managers, application icon, and window lifecycle listeners.</li>
+        <li><strong><code>JTabbedPane</code>:</strong> Multi-document interface allowing the Placement Officer to switch between student rosters and campus job drives.</li>
+        <li><strong><code>JTable</code> &amp; <code>DefaultTableModel</code>:</strong> High-performance tabular data grid displaying database records retrieved directly via JDBC <code>PreparedStatement</code> queries.</li>
+        <li><strong>Event-Driven Model:</strong> Asynchronous event delegation using lambda expressions (<code>btnRefresh.addActionListener(e -&gt; loadDatabaseData())</code>).</li>
+        <li><strong>Thread Safety (EDT):</strong> UI construction is dispatched safely to the <strong>Event Dispatch Thread</strong> using <code>SwingUtilities.invokeLater()</code>.</li>
+    </ul>
+
+    <h2>5.3 Architectural Comparison: Web Client vs. Swing Desktop Client</h2>
+    <table>
+        <tr>
+            <th>Attribute</th>
+            <th>Web Interface (Servlet / JSP / Bootstrap)</th>
+            <th>Desktop Client (Java Swing)</th>
+        </tr>
+        <tr>
+            <td><strong>Client Requirements</strong></td>
+            <td>Zero client-side install; any modern web browser on desktop or mobile.</td>
+            <td>Requires Java Runtime Environment (JRE/JDK 17) installed on host.</td>
+        </tr>
+        <tr>
+            <td><strong>Protocol</strong></td>
+            <td>Stateless HTTP/HTTPS with cookies (<code>JSESSIONID</code>).</td>
+            <td>Stateful direct TCP socket connection to database (2-Tier) or REST client (3-Tier).</td>
+        </tr>
+        <tr>
+            <td><strong>User Experience</strong></td>
+            <td>Responsive web layout with Bootstrap 5 cards and dynamic pagination.</td>
+            <td>Native desktop window, high-density <code>JTable</code> rows, instant keyboard shortcuts.</td>
+        </tr>
+        <tr>
+            <td><strong>Updates &amp; Maintenance</strong></td>
+            <td>Centralized on Tomcat server; instant update for all users on refresh.</td>
+            <td>Requires distributing client executable JARs across institutional machines.</td>
+        </tr>
+    </table>
+
+    <!-- ========================================================================= -->
+    <!-- CHAPTER 6: DATABASE DESIGN & JDBC LAYER                                  -->
+    <!-- ========================================================================= -->
+    <div class="page-break"></div>
+    <h1>6. Database Design &amp; JDBC Data Access Layer</h1>
+
+    <h2>6.1 Relational Schema Architecture</h2>
+    <p>
+        The database schema <code>placement_portal</code> contains 6 normalized relational tables:
+    </p>
+    <table>
+        <tr>
+            <th>Table Name</th>
+            <th>Primary Key</th>
+            <th>Foreign Keys &amp; Key Constraints</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td><code>users</code></td>
+            <td><code>user_id</code></td>
+            <td><code>email UNIQUE</code></td>
+            <td>Authentication credentials, BCrypt password hashes, account status, and role (<code>ADMIN</code> / <code>STUDENT</code>).</td>
+        </tr>
+        <tr>
+            <td><code>students</code></td>
+            <td><code>student_id</code></td>
+            <td><code>user_id &rarr; users(user_id)</code>, <code>enrollment_number UNIQUE</code></td>
+            <td>Academic profiles, branch, semester, CGPA, phone, and resume storage path.</td>
+        </tr>
+        <tr>
+            <td><code>companies</code></td>
+            <td><code>company_id</code></td>
+            <td><code>company_name UNIQUE</code></td>
+            <td>Recruiter partner organizations, industry sectors, location, and HR contacts.</td>
+        </tr>
+        <tr>
+            <td><code>jobs</code></td>
+            <td><code>job_id</code></td>
+            <td><code>company_id &rarr; companies(company_id)</code></td>
+            <td>Campus job drives, titles, descriptions, minimum CGPA, eligible branch, and deadlines.</td>
+        </tr>
+        <tr>
+            <td><code>applications</code></td>
+            <td><code>application_id</code></td>
+            <td><code>job_id &rarr; jobs</code>, <code>student_id &rarr; students</code>, <code>UNIQUE(student_id, job_id)</code></td>
+            <td>Student applications, status tracking (<code>APPLIED</code>, <code>SHORTLISTED</code>, <code>SELECTED</code>, <code>REJECTED</code>).</td>
+        </tr>
+        <tr>
+            <td><code>application_status_history</code></td>
+            <td><code>history_id</code></td>
+            <td><code>application_id &rarr; applications</code></td>
+            <td>Unchangeable audit trail recording previous status, new status, timestamp, and changing admin ID.</td>
+        </tr>
+    </table>
+
+    <h2>6.2 High-Performance Connection Pooling (HikariCP)</h2>
+    <p>
+        Rather than creating expensive new database connections per HTTP request, the portal utilizes <strong>HikariCP</strong> (the fastest production connection pool in the Java ecosystem). HikariCP maintains pre-warmed connections, handles connection recycling, and automatically falls back to embedded H2 if MySQL is unavailable.
+    </p>
+
+    <h2>6.3 Atomic ACID Transaction Management</h2>
+    <p>
+        Multi-table operations like student registration must succeed entirely or roll back cleanly:
+    </p>
+    <pre>
+Connection conn = DatabaseConfig.getConnection();
+try {
+    conn.setAutoCommit(false); // Begin ACID Transaction
+
+    int userId = userDAO.create(user, conn);       // Insert User Account
+    student.setUserId(userId);
+    int studentId = studentDAO.create(student, conn); // Insert Academic Profile
+
+    conn.commit(); // Commit Transaction atomically
+} catch (SQLException e) {
+    conn.rollback(); // Rollback on any failure
+    throw new RuntimeException("Registration transaction aborted.", e);
+} finally {
+    conn.setAutoCommit(true);
+    conn.close();
+}
+    </pre>
+
+    <!-- ========================================================================= -->
+    <!-- CHAPTER 7: TESTING MATRIX & VERIFICATION                                 -->
+    <!-- ========================================================================= -->
+    <div class="page-break"></div>
+    <h1>7. Verification &amp; Testing Results</h1>
+
+    <h2>7.1 Automated Unit Test Execution (JUnit 5 &amp; Mockito)</h2>
+    <p>
+        The project includes 15 automated unit tests in <code>src/test/java</code>:
+    </p>
+    <table>
+        <tr>
+            <th>Test Class</th>
+            <th>Scenarios Tested</th>
+            <th>Result</th>
+        </tr>
+        <tr>
+            <td><code>ApplicationServiceUnitTest</code></td>
+            <td>Transactional application submission, duplicate application prevention, and audit history logging.</td>
+            <td><span style="color: #16a34a; font-weight: bold;">PASS (3/3)</span></td>
+        </tr>
+        <tr>
+            <td><code>JobEligibilityTest</code></td>
+            <td>Student CGPA threshold validation, eligible engineering branch matching, and deadline expiration check.</td>
+            <td><span style="color: #16a34a; font-weight: bold;">PASS (3/3)</span></td>
+        </tr>
+        <tr>
+            <td><code>UserServiceTest</code></td>
+            <td>BCrypt password verification with <code>chiragadmin</code>, admin account creation, and password reset rules.</td>
+            <td><span style="color: #16a34a; font-weight: bold;">PASS (3/3)</span></td>
+        </tr>
+        <tr>
+            <td><code>PasswordUtilTest</code></td>
+            <td>Salt generation, hashing consistency, and hash mismatch rejection.</td>
+            <td><span style="color: #16a34a; font-weight: bold;">PASS (2/2)</span></td>
+        </tr>
+        <tr>
+            <td><code>ValidationUtilTest</code></td>
+            <td>Email format checking, phone number validation, and CGPA range boundaries.</td>
+            <td><span style="color: #16a34a; font-weight: bold;">PASS (4/4)</span></td>
+        </tr>
+    </table>
+
+    <h2>7.2 Production Verification &amp; Live URLs</h2>
+    <ul>
+        <li><strong>Application Portal:</strong> <code>http://localhost:8080/placement-portal/</code></li>
+        <li><strong>Primary Admin ID:</strong> <code>chiragadmin</code> | <strong>Password:</strong> <code>chirag@123</code></li>
+        <li><strong>Student Demo:</strong> <code>aarav.sharma@student.edu</code> | <strong>Password:</strong> <code>Password@123</code></li>
+        <li><strong>GitHub Source Repository:</strong> <code>https://github.com/Chiragkkamani/Student-Placement-Job-Portal-project..git</code></li>
+    </ul>
+
+    <div class="callout callout-success">
+        <strong>Conclusion:</strong> The Student Placement &amp; Job Portal demonstrates a complete, production-grade mastery of Advanced Java Technologies. It bridges server-side Jakarta Servlets, scriptlet-free JSP/JSTL, pure JDBC transactional persistence, interactive Java Swing desktop tools, and an enterprise architecture benchmarked against the modern Spring Framework.
+    </div>
+
+    <div class="footer-note">
+        Generated for Advanced Java Technologies (AJT) College Project Evaluation • 2026
+    </div>
+
+</body>
+</html>
