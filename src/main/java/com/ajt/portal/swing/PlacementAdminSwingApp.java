@@ -27,7 +27,7 @@ public class PlacementAdminSwingApp extends JFrame {
     private JLabel statusLabel;
 
     public PlacementAdminSwingApp() {
-        setTitle("Student Placement Portal - AJT Desktop Administration Console (Swing)");
+        setTitle("Student Placement Portal - Atmanirbhar Chirag Scheme Desktop Console");
         setSize(950, 650);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -47,7 +47,7 @@ public class PlacementAdminSwingApp extends JFrame {
         headerPanel.setBackground(new Color(13, 110, 253));
         headerPanel.setBorder(new EmptyBorder(12, 16, 12, 16));
 
-        JLabel titleLabel = new JLabel("AJT Campus Placement Console");
+        JLabel titleLabel = new JLabel("Atmanirbhar Chirag Scheme - Placement Console");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         titleLabel.setForeground(Color.WHITE);
 
@@ -64,7 +64,8 @@ public class PlacementAdminSwingApp extends JFrame {
         tabbedPane.setFont(new Font("Segoe UI", Font.BOLD, 13));
 
         // Tab 1: Students Table
-        studentModel = new DefaultTableModel(new String[]{"ID", "Name", "Enrollment No", "Branch", "Semester", "CGPA", "Phone"}, 0) {
+        studentModel = new DefaultTableModel(
+                new String[] { "ID", "Name", "Enrollment No", "Branch", "Semester", "CGPA", "Phone" }, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -78,7 +79,8 @@ public class PlacementAdminSwingApp extends JFrame {
         tabbedPane.addTab("Registered Students", scrollStudents);
 
         // Tab 2: Jobs Table
-        jobModel = new DefaultTableModel(new String[]{"Job ID", "Job Title", "Company", "Location", "Min CGPA", "Branch", "Deadline", "Status"}, 0) {
+        jobModel = new DefaultTableModel(new String[] { "Job ID", "Job Title", "Company", "Location", "Min CGPA",
+                "Branch", "Deadline", "Status" }, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -131,12 +133,13 @@ public class PlacementAdminSwingApp extends JFrame {
 
         try (Connection conn = DatabaseConfig.getConnection()) {
             // Load Students via JDBC PreparedStatement
-            String sqlStudents = "SELECT s.student_id, u.full_name, s.enrollment_number, s.branch, s.semester, s.cgpa, s.phone " +
-                                 "FROM students s JOIN users u ON s.user_id = u.user_id ORDER BY s.student_id ASC";
+            String sqlStudents = "SELECT s.student_id, u.full_name, s.enrollment_number, s.branch, s.semester, s.cgpa, s.phone "
+                    +
+                    "FROM students s JOIN users u ON s.user_id = u.user_id ORDER BY s.student_id ASC";
             try (PreparedStatement stmt = conn.prepareStatement(sqlStudents);
-                 ResultSet rs = stmt.executeQuery()) {
+                    ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    studentModel.addRow(new Object[]{
+                    studentModel.addRow(new Object[] {
                             rs.getInt(1),
                             rs.getString(2),
                             rs.getString(3),
@@ -149,12 +152,13 @@ public class PlacementAdminSwingApp extends JFrame {
             }
 
             // Load Jobs via JDBC PreparedStatement
-            String sqlJobs = "SELECT j.job_id, j.job_title, c.company_name, j.location, j.minimum_cgpa, j.eligible_branch, j.deadline, j.job_status " +
-                             "FROM jobs j JOIN companies c ON j.company_id = c.company_id ORDER BY j.job_id ASC";
+            String sqlJobs = "SELECT j.job_id, j.job_title, c.company_name, j.location, j.minimum_cgpa, j.eligible_branch, j.deadline, j.job_status "
+                    +
+                    "FROM jobs j JOIN companies c ON j.company_id = c.company_id ORDER BY j.job_id ASC";
             try (PreparedStatement stmt = conn.prepareStatement(sqlJobs);
-                 ResultSet rs = stmt.executeQuery()) {
+                    ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    jobModel.addRow(new Object[]{
+                    jobModel.addRow(new Object[] {
                             rs.getInt(1),
                             rs.getString(2),
                             rs.getString(3),
@@ -167,13 +171,15 @@ public class PlacementAdminSwingApp extends JFrame {
                 }
             }
 
-            statusLabel.setText("Database synchronized. Loaded " + studentModel.getRowCount() + " students, " + jobModel.getRowCount() + " job openings.");
+            statusLabel.setText("Database synchronized. Loaded " + studentModel.getRowCount() + " students, "
+                    + jobModel.getRowCount() + " job openings.");
             statusLabel.setForeground(new Color(25, 135, 84));
 
         } catch (SQLException e) {
             statusLabel.setText("JDBC Error: " + e.getMessage());
             statusLabel.setForeground(new Color(220, 53, 69));
-            JOptionPane.showMessageDialog(this, "Could not fetch data from database: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Could not fetch data from database: " + e.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -184,4 +190,3 @@ public class PlacementAdminSwingApp extends JFrame {
         });
     }
 }
-

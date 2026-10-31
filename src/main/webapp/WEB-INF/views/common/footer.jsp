@@ -36,10 +36,10 @@
             <div class="col-lg-3 col-md-6">
                 <h6 class="text-white mb-3">Placement Cell Support</h6>
                 <p class="text-secondary small mb-2">
-                    <i class="bi bi-geo-alt me-2 text-primary"></i>University Placement Cell, Block A
+                    <i class="bi bi-geo-alt me-2 text-primary"></i>Atmanirbhar Chirag Scheme Placement Cell, Block A
                 </p>
                 <p class="text-secondary small mb-2">
-                    <i class="bi bi-envelope me-2 text-primary"></i>placement@university.edu
+                    <i class="bi bi-envelope me-2 text-primary"></i>placement@chiragscheme.edu
                 </p>
                 <p class="text-secondary small mb-0">
                     <i class="bi bi-telephone me-2 text-primary"></i>+91 (0) 79 1234 5678

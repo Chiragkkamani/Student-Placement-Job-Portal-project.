@@ -7,7 +7,7 @@
             <i class="bi bi-mortarboard-fill text-primary fs-3 me-2"></i>
             <div>
                 <span class="d-block lh-1">PlacementPortal</span>
-                <small class="text-muted fw-normal fs-6">AJT University</small>
+                <small class="text-muted fw-normal fs-6">Atmanirbhar Chirag Scheme</small>
             </div>
         </a>
 

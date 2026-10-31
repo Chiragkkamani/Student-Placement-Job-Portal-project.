@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${pageTitle != null ? pageTitle : 'Campus Placement Portal'} | AJT University</title>
+    <title>${pageTitle != null ? pageTitle : 'Campus Placement Portal'} | Atmanirbhar Chirag Scheme</title>
     
     <!-- Bootstrap 5 CSS (Local first, CDN fallback) -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css">
