@@ -63,6 +63,42 @@ public class UserServiceTest {
     }
 
     @Test
+    public void testAdminCreatesCompanyHrAccountSuccess() throws SQLException {
+        when(mockUserDao.findByEmail(anyString())).thenReturn(null);
+        when(mockUserDao.create(any(User.class))).thenReturn(15);
+
+        User hr = userService.createAccountByAdmin(
+            "Priya Sharma",
+            "google.hr@placement.edu",
+            "Password@123",
+            User.ROLE_COMPANY_HR,
+            User.STATUS_ACTIVE,
+            1
+        );
+
+        assertNotNull(hr);
+        assertEquals("google.hr@placement.edu", hr.getEmail());
+        assertEquals(User.ROLE_COMPANY_HR, hr.getRole());
+        assertTrue(hr.isCompanyHr());
+        assertEquals(1, hr.getCompanyId());
+        verify(mockUserDao, times(1)).create(any(User.class));
+    }
+
+    @Test
+    public void testAdminCreatesCompanyHrAccountWithoutCompanyFails() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            userService.createAccountByAdmin(
+                "Priya Sharma",
+                "google.hr@placement.edu",
+                "Password@123",
+                User.ROLE_COMPANY_HR,
+                User.STATUS_ACTIVE,
+                null // missing companyId
+            );
+        });
+    }
+
+    @Test
     public void testUpdatePasswordValidation() throws SQLException {
         when(mockUserDao.updatePassword(eq(6), anyString())).thenReturn(true);
 

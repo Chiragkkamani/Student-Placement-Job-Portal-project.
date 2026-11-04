@@ -21,6 +21,7 @@ import java.nio.file.Paths;
 public class ResumeServlet extends HttpServlet {
 
     private final StudentService studentService = new StudentService();
+    private final com.ajt.portal.service.ApplicationService applicationService = new com.ajt.portal.service.ApplicationService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -52,10 +53,17 @@ public class ResumeServlet extends HttpServlet {
             return;
         }
 
-        // Authorization check: Admins can view any resume; students can only view their own
+        // Authorization check: Admins can view any resume; students can only view their own; HR can only view resumes of students who applied to their company
         if (currentUser.isStudent() && student.getUserId() != currentUser.getUserId()) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied to this resume.");
             return;
+        }
+
+        if (currentUser.isCompanyHr()) {
+            if (currentUser.getCompanyId() == null || !applicationService.hasStudentAppliedToCompany(student.getStudentId(), currentUser.getCompanyId())) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied: Candidate has not applied to your company drives.");
+                return;
+            }
         }
 
         String appRealPath = getServletContext().getRealPath("/");

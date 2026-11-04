@@ -14,7 +14,7 @@ public class UserDAO {
     private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
 
     public int create(User user) throws SQLException {
-        String sql = "INSERT INTO users (full_name, email, password_hash, role, account_status) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (full_name, email, password_hash, role, account_status, company_id) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, user.getFullName());
@@ -22,6 +22,11 @@ public class UserDAO {
             stmt.setString(3, user.getPasswordHash());
             stmt.setString(4, user.getRole());
             stmt.setString(5, user.getAccountStatus());
+            if (user.getCompanyId() != null && user.getCompanyId() > 0) {
+                stmt.setInt(6, user.getCompanyId());
+            } else {
+                stmt.setNull(6, Types.INTEGER);
+            }
 
             int affected = stmt.executeUpdate();
             if (affected > 0) {
@@ -38,13 +43,18 @@ public class UserDAO {
     }
 
     public int create(User user, Connection conn) throws SQLException {
-        String sql = "INSERT INTO users (full_name, email, password_hash, role, account_status) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (full_name, email, password_hash, role, account_status, company_id) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, user.getFullName());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPasswordHash());
             stmt.setString(4, user.getRole());
             stmt.setString(5, user.getAccountStatus());
+            if (user.getCompanyId() != null && user.getCompanyId() > 0) {
+                stmt.setInt(6, user.getCompanyId());
+            } else {
+                stmt.setNull(6, Types.INTEGER);
+            }
 
             int affected = stmt.executeUpdate();
             if (affected > 0) {
@@ -61,7 +71,11 @@ public class UserDAO {
     }
 
     public User findById(int userId) throws SQLException {
-        String sql = "SELECT user_id, full_name, email, password_hash, role, account_status, created_at FROM users WHERE user_id = ?";
+        String sql = "SELECT u.user_id, u.full_name, u.email, u.password_hash, u.role, u.account_status, u.company_id, u.created_at, " +
+                     "c.company_name " +
+                     "FROM users u " +
+                     "LEFT JOIN companies c ON u.company_id = c.company_id " +
+                     "WHERE u.user_id = ?";
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, userId);
@@ -83,8 +97,11 @@ public class UserDAO {
             return null;
         }
         String clean = identifier.trim().toLowerCase();
-        String sql = "SELECT user_id, full_name, email, password_hash, role, account_status, created_at FROM users " +
-                     "WHERE LOWER(email) = ? OR LOWER(email) = ? OR LOWER(email) LIKE ?";
+        String sql = "SELECT u.user_id, u.full_name, u.email, u.password_hash, u.role, u.account_status, u.company_id, u.created_at, " +
+                     "c.company_name " +
+                     "FROM users u " +
+                     "LEFT JOIN companies c ON u.company_id = c.company_id " +
+                     "WHERE LOWER(u.email) = ? OR LOWER(u.email) = ? OR LOWER(u.email) LIKE ?";
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, clean);
@@ -100,13 +117,18 @@ public class UserDAO {
     }
 
     public boolean update(User user) throws SQLException {
-        String sql = "UPDATE users SET full_name = ?, email = ?, account_status = ? WHERE user_id = ?";
+        String sql = "UPDATE users SET full_name = ?, email = ?, account_status = ?, company_id = ? WHERE user_id = ?";
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, user.getFullName());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getAccountStatus());
-            stmt.setInt(4, user.getUserId());
+            if (user.getCompanyId() != null && user.getCompanyId() > 0) {
+                stmt.setInt(4, user.getCompanyId());
+            } else {
+                stmt.setNull(4, Types.INTEGER);
+            }
+            stmt.setInt(5, user.getUserId());
             return stmt.executeUpdate() > 0;
         }
     }
@@ -142,7 +164,11 @@ public class UserDAO {
 
     public List<User> getAllUsers() throws SQLException {
         List<User> list = new ArrayList<>();
-        String sql = "SELECT user_id, full_name, email, password_hash, role, account_status, created_at FROM users ORDER BY created_at DESC";
+        String sql = "SELECT u.user_id, u.full_name, u.email, u.password_hash, u.role, u.account_status, u.company_id, u.created_at, " +
+                     "c.company_name " +
+                     "FROM users u " +
+                     "LEFT JOIN companies c ON u.company_id = c.company_id " +
+                     "ORDER BY u.created_at DESC";
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
@@ -162,6 +188,14 @@ public class UserDAO {
         u.setRole(rs.getString("role"));
         u.setAccountStatus(rs.getString("account_status"));
         u.setCreatedAt(rs.getTimestamp("created_at"));
+        int compId = rs.getInt("company_id");
+        if (!rs.wasNull()) {
+            u.setCompanyId(compId);
+        }
+        try {
+            u.setCompanyName(rs.getString("company_name"));
+        } catch (SQLException ignored) {
+        }
         return u;
     }
 }

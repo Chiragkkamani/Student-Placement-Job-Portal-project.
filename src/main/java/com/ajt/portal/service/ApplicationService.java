@@ -249,5 +249,106 @@ public class ApplicationService {
             throw new RuntimeException("Could not fetch recent applications.", e);
         }
     }
+
+    public List<Application> getCompanyApplications(int companyId, String search, String status, Integer jobId) {
+        try {
+            return applicationDAO.getApplicationsByCompany(companyId, search, status, jobId);
+        } catch (SQLException e) {
+            logger.error("Error fetching applications for company {}: {}", companyId, e.getMessage());
+            throw new RuntimeException("Could not fetch company applications.", e);
+        }
+    }
+
+    public Application getApplicationByIdAndCompany(int applicationId, int companyId) {
+        try {
+            return applicationDAO.findByIdAndCompany(applicationId, companyId);
+        } catch (SQLException e) {
+            logger.error("Error fetching application {} for company {}: {}", applicationId, companyId, e.getMessage());
+            throw new RuntimeException("Could not fetch application.", e);
+        }
+    }
+
+    public com.ajt.portal.model.DashboardStats getCompanyApplicationStats(int companyId) {
+        try {
+            return applicationDAO.getCompanyApplicationStats(companyId);
+        } catch (SQLException e) {
+            logger.error("Error fetching stats for company {}: {}", companyId, e.getMessage());
+            return new com.ajt.portal.model.DashboardStats();
+        }
+    }
+
+    public List<Application> getRecentApplicationsForCompany(int companyId, int limit) {
+        try {
+            return applicationDAO.getRecentApplicationsForCompany(companyId, limit);
+        } catch (SQLException e) {
+            logger.error("Error fetching recent applications for company {}: {}", companyId, e.getMessage());
+            throw new RuntimeException("Could not fetch recent applications.", e);
+        }
+    }
+
+    public boolean hasStudentAppliedToCompany(int studentId, int companyId) {
+        try {
+            return applicationDAO.hasStudentAppliedToCompany(studentId, companyId);
+        } catch (SQLException e) {
+            logger.error("Error checking student application for student {} and company {}: {}", studentId, companyId, e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean updateApplicationStatusForCompany(int applicationId, int companyId, String newStatus, String remarks, int hrUserId)
+            throws IllegalArgumentException {
+        if (!VALID_STATUSES.contains(newStatus.toUpperCase())) {
+            throw new IllegalArgumentException("Invalid status: " + newStatus + ". Allowed: " + VALID_STATUSES);
+        }
+
+        Connection conn = null;
+        try {
+            Application current = applicationDAO.findByIdAndCompany(applicationId, companyId);
+            if (current == null) {
+                throw new IllegalArgumentException("Application not found or unauthorized to manage another company's applicant.");
+            }
+
+            String previousStatus = current.getApplicationStatus();
+
+            conn = DatabaseConfig.getConnection();
+            conn.setAutoCommit(false);
+
+            boolean updated = applicationDAO.updateStatus(applicationId, newStatus.toUpperCase(), remarks, conn);
+            if (!updated) {
+                conn.rollback();
+                return false;
+            }
+
+            ApplicationStatusHistory history = new ApplicationStatusHistory(
+                applicationId,
+                previousStatus,
+                newStatus.toUpperCase(),
+                hrUserId
+            );
+            historyDAO.create(history, conn);
+
+            conn.commit();
+            logger.info("Application {} status updated to {} by company HR {}", applicationId, newStatus, hrUserId);
+            return true;
+        } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    logger.error("Rollback failed: {}", ex.getMessage());
+                }
+            }
+            logger.error("Error updating application status for company HR: {}", e.getMessage());
+            throw new RuntimeException("Could not update application status.", e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException ignored) {
+                }
+            }
+        }
+    }
 }
 

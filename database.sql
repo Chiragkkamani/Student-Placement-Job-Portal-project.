@@ -22,10 +22,11 @@ DROP TABLE IF EXISTS `users`;
 -- -----------------------------------------------------------------------------
 CREATE TABLE `users` (
     `user_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `company_id` INT DEFAULT NULL,
     `full_name` VARCHAR(100) NOT NULL,
     `email` VARCHAR(120) NOT NULL UNIQUE,
     `password_hash` VARCHAR(255) NOT NULL,
-    `role` ENUM('ADMIN', 'STUDENT') NOT NULL DEFAULT 'STUDENT',
+    `role` ENUM('ADMIN', 'STUDENT', 'COMPANY_HR') NOT NULL DEFAULT 'STUDENT',
     `account_status` ENUM('ACTIVE', 'INACTIVE') NOT NULL DEFAULT 'ACTIVE',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     INDEX `idx_users_email` (`email`),
@@ -165,7 +166,12 @@ INSERT INTO `users` (`user_id`, `full_name`, `email`, `password_hash`, `role`, `
 (23, 'Tsering Angmo', 'tsering.angmo@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
 (24, 'Pranav Trivedi', 'pranav.trivedi@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
 (25, 'Deepika Reddy', 'deepika.reddy@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
-(26, 'Mohammad Zubair', 'mohammad.zubair@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW());
+(26, 'Mohammad Zubair', 'mohammad.zubair@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(27, 'Priya Sharma (Google HR)', 'google.hr@placement.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'COMPANY_HR', 'ACTIVE', NOW()),
+(28, 'Google Recruiter', 'googlehr', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'COMPANY_HR', 'ACTIVE', NOW()),
+(29, 'Vikram Malhotra (TCS HR)', 'tcs.hr@placement.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'COMPANY_HR', 'ACTIVE', NOW()),
+(30, 'TCS Recruiter', 'tcshr', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'COMPANY_HR', 'ACTIVE', NOW()),
+(31, 'Sneha Kapadia (Microsoft HR)', 'ms.hr@placement.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'COMPANY_HR', 'ACTIVE', NOW());
 
 -- 2. Insert Students (24 Total from Across India)
 INSERT INTO `students` (`student_id`, `user_id`, `enrollment_number`, `branch`, `semester`, `cgpa`, `phone`, `resume_path`) VALUES
@@ -206,6 +212,11 @@ INSERT INTO `companies` (`company_id`, `company_name`, `industry`, `location`, `
 (8, 'IBM India', 'Cognitive & Hybrid Cloud', 'Gurugram, India', 'https://ibm.com/employment', 'talent-india@ibm.com', NOW()),
 (9, 'Goldman Sachs', 'Financial Technology & Engineering', 'Bengaluru, India', 'https://goldmansachs.com/careers', 'campusrecruiting@gs.com', NOW()),
 (10, 'Intel Technology', 'Semiconductor & Embedded Systems', 'Bengaluru, India', 'https://intel.com/jobs', 'student-careers@intel.com', NOW());
+
+-- Link Company HR Users to their respective companies
+UPDATE `users` SET `company_id` = 1 WHERE `user_id` IN (27, 28);
+UPDATE `users` SET `company_id` = 4 WHERE `user_id` IN (29, 30);
+UPDATE `users` SET `company_id` = 2 WHERE `user_id` = 31;
 
 -- 4. Insert Job Openings (26 Total Openings)
 INSERT INTO `jobs` (`job_id`, `company_id`, `job_title`, `description`, `location`, `minimum_cgpa`, `eligible_branch`, `deadline`, `job_status`, `created_at`) VALUES

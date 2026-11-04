@@ -27,6 +27,8 @@ public class LoginServlet extends HttpServlet {
             User currentUser = (User) session.getAttribute("currentUser");
             if (currentUser.isAdmin()) {
                 response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+            } else if (currentUser.isCompanyHr()) {
+                response.sendRedirect(request.getContextPath() + "/recruiter/dashboard");
             } else {
                 response.sendRedirect(request.getContextPath() + "/student/dashboard");
             }
@@ -75,6 +77,8 @@ public class LoginServlet extends HttpServlet {
 
             if (user.isAdmin()) {
                 response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+            } else if (user.isCompanyHr()) {
+                response.sendRedirect(request.getContextPath() + "/recruiter/dashboard");
             } else {
                 response.sendRedirect(request.getContextPath() + "/student/dashboard");
             }

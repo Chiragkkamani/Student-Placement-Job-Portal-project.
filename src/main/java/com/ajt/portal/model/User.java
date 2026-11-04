@@ -8,11 +8,14 @@ public class User implements Serializable {
 
     public static final String ROLE_ADMIN = "ADMIN";
     public static final String ROLE_STUDENT = "STUDENT";
+    public static final String ROLE_COMPANY_HR = "COMPANY_HR";
 
     public static final String STATUS_ACTIVE = "ACTIVE";
     public static final String STATUS_INACTIVE = "INACTIVE";
 
     private int userId;
+    private Integer companyId;
+    private String companyName;
     private String fullName;
     private String email;
     private String passwordHash;
@@ -89,12 +92,32 @@ public class User implements Serializable {
         this.createdAt = createdAt;
     }
 
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
     public boolean isAdmin() {
         return ROLE_ADMIN.equalsIgnoreCase(this.role);
     }
 
     public boolean isStudent() {
         return ROLE_STUDENT.equalsIgnoreCase(this.role);
+    }
+
+    public boolean isCompanyHr() {
+        return ROLE_COMPANY_HR.equalsIgnoreCase(this.role);
     }
 
     public boolean isActive() {

@@ -248,6 +248,152 @@ public class ApplicationDAO {
         return stats;
     }
 
+    public List<Application> getApplicationsByCompany(int companyId, String search, String status, Integer jobId) throws SQLException {
+        List<Application> list = new ArrayList<>();
+        StringBuilder sql = new StringBuilder(
+            "SELECT a.application_id, a.job_id, a.student_id, a.application_date, a.application_status, a.remarks, " +
+            "j.job_title, j.location AS job_location, j.minimum_cgpa AS job_min_cgpa, j.eligible_branch AS job_branch, j.job_status, " +
+            "c.company_name, " +
+            "u.full_name AS student_name, u.email AS student_email, " +
+            "s.enrollment_number, s.branch AS student_branch, s.semester AS student_semester, s.cgpa AS student_cgpa, s.phone AS student_phone, s.resume_path " +
+            "FROM applications a " +
+            "JOIN jobs j ON a.job_id = j.job_id " +
+            "JOIN companies c ON j.company_id = c.company_id " +
+            "JOIN students s ON a.student_id = s.student_id " +
+            "JOIN users u ON s.user_id = u.user_id " +
+            "WHERE j.company_id = ? "
+        );
+
+        List<Object> params = new ArrayList<>();
+        params.add(companyId);
+
+        if (search != null && !search.trim().isEmpty()) {
+            sql.append("AND (u.full_name LIKE ? OR s.enrollment_number LIKE ? OR j.job_title LIKE ?) ");
+            String term = "%" + search.trim() + "%";
+            params.add(term);
+            params.add(term);
+            params.add(term);
+        }
+        if (status != null && !status.trim().isEmpty() && !"All".equalsIgnoreCase(status.trim())) {
+            sql.append("AND a.application_status = ? ");
+            params.add(status.trim().toUpperCase());
+        }
+        if (jobId != null && jobId > 0) {
+            sql.append("AND a.job_id = ? ");
+            params.add(jobId);
+        }
+
+        sql.append("ORDER BY a.application_date DESC");
+
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
+            for (int i = 0; i < params.size(); i++) {
+                stmt.setObject(i + 1, params.get(i));
+            }
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapRow(rs));
+                }
+            }
+        }
+        return list;
+    }
+
+    public Application findByIdAndCompany(int applicationId, int companyId) throws SQLException {
+        String sql = "SELECT a.application_id, a.job_id, a.student_id, a.application_date, a.application_status, a.remarks, " +
+                     "j.job_title, j.location AS job_location, j.minimum_cgpa AS job_min_cgpa, j.eligible_branch AS job_branch, j.job_status, " +
+                     "c.company_name, " +
+                     "u.full_name AS student_name, u.email AS student_email, " +
+                     "s.enrollment_number, s.branch AS student_branch, s.semester AS student_semester, s.cgpa AS student_cgpa, s.phone AS student_phone, s.resume_path " +
+                     "FROM applications a " +
+                     "JOIN jobs j ON a.job_id = j.job_id " +
+                     "JOIN companies c ON j.company_id = c.company_id " +
+                     "JOIN students s ON a.student_id = s.student_id " +
+                     "JOIN users u ON s.user_id = u.user_id " +
+                     "WHERE a.application_id = ? AND j.company_id = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, applicationId);
+            stmt.setInt(2, companyId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapRow(rs);
+                }
+            }
+        }
+        return null;
+    }
+
+    public DashboardStats getCompanyApplicationStats(int companyId) throws SQLException {
+        DashboardStats stats = new DashboardStats();
+        String sql = "SELECT a.application_status, COUNT(*) as cnt " +
+                     "FROM applications a " +
+                     "JOIN jobs j ON a.job_id = j.job_id " +
+                     "WHERE j.company_id = ? " +
+                     "GROUP BY a.application_status";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, companyId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                int total = 0;
+                while (rs.next()) {
+                    String status = rs.getString("application_status");
+                    int count = rs.getInt("cnt");
+                    total += count;
+                    switch (status.toUpperCase()) {
+                        case Application.STATUS_APPLIED -> stats.setAppliedCount(count);
+                        case Application.STATUS_SHORTLISTED -> stats.setShortlistedCount(count);
+                        case Application.STATUS_SELECTED -> stats.setSelectedCount(count);
+                        case Application.STATUS_REJECTED -> stats.setRejectedCount(count);
+                    }
+                }
+                stats.setTotalApplications(total);
+            }
+        }
+        return stats;
+    }
+
+    public List<Application> getRecentApplicationsForCompany(int companyId, int limit) throws SQLException {
+        List<Application> list = new ArrayList<>();
+        String sql = "SELECT a.application_id, a.job_id, a.student_id, a.application_date, a.application_status, a.remarks, " +
+                     "j.job_title, j.location AS job_location, j.minimum_cgpa AS job_min_cgpa, j.eligible_branch AS job_branch, j.job_status, " +
+                     "c.company_name, " +
+                     "u.full_name AS student_name, u.email AS student_email, " +
+                     "s.enrollment_number, s.branch AS student_branch, s.semester AS student_semester, s.cgpa AS student_cgpa, s.phone AS student_phone, s.resume_path " +
+                     "FROM applications a " +
+                     "JOIN jobs j ON a.job_id = j.job_id " +
+                     "JOIN companies c ON j.company_id = c.company_id " +
+                     "JOIN students s ON a.student_id = s.student_id " +
+                     "JOIN users u ON s.user_id = u.user_id " +
+                     "WHERE j.company_id = ? " +
+                     "ORDER BY a.application_date DESC LIMIT ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, companyId);
+            stmt.setInt(2, limit);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapRow(rs));
+                }
+            }
+        }
+        return list;
+    }
+
+    public boolean hasStudentAppliedToCompany(int studentId, int companyId) throws SQLException {
+        String sql = "SELECT 1 FROM applications a " +
+                     "JOIN jobs j ON a.job_id = j.job_id " +
+                     "WHERE a.student_id = ? AND j.company_id = ? LIMIT 1";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, studentId);
+            stmt.setInt(2, companyId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
     private Application mapRow(ResultSet rs) throws SQLException {
         Application a = new Application();
         a.setApplicationId(rs.getInt("application_id"));

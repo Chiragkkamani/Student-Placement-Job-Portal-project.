@@ -43,6 +43,25 @@
                     </li>
                 </c:if>
 
+                <!-- Recruiter Navigation -->
+                <c:if test="${not empty sessionScope.currentUser and sessionScope.currentUser.role == 'COMPANY_HR'}">
+                    <li class="nav-item">
+                        <a class="nav-link ${activePage == 'recruiter-dashboard' ? 'active' : ''}" href="${pageContext.request.contextPath}/recruiter/dashboard">
+                            <i class="bi bi-speedometer2 me-1"></i> HR Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ${activePage == 'recruiter-jobs' ? 'active' : ''}" href="${pageContext.request.contextPath}/recruiter/jobs">
+                            <i class="bi bi-briefcase me-1"></i> My Drives
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ${activePage == 'recruiter-applications' ? 'active' : ''}" href="${pageContext.request.contextPath}/recruiter/applications">
+                            <i class="bi bi-people me-1"></i> Applicants
+                        </a>
+                    </li>
+                </c:if>
+
                 <!-- Admin Navigation -->
                 <c:if test="${not empty sessionScope.currentUser and sessionScope.currentUser.role == 'ADMIN'}">
                     <li class="nav-item">
@@ -84,10 +103,13 @@
                     <c:when test="${not empty sessionScope.currentUser}">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="badge ${sessionScope.currentUser.role == 'ADMIN' ? 'bg-danger' : 'bg-primary'} badge-pill">
-                                    ${sessionScope.currentUser.role}
+                                <span class="badge ${sessionScope.currentUser.role == 'ADMIN' ? 'bg-danger' : (sessionScope.currentUser.role == 'COMPANY_HR' ? 'bg-success' : 'bg-primary')} badge-pill">
+                                    ${sessionScope.currentUser.role == 'COMPANY_HR' ? 'HR RECRUITER' : sessionScope.currentUser.role}
                                 </span>
                                 <span class="fw-bold">${sessionScope.currentUser.fullName}</span>
+                                <c:if test="${not empty sessionScope.currentUser.companyName}">
+                                    <span class="badge bg-light text-dark border d-none d-lg-inline-block">${sessionScope.currentUser.companyName}</span>
+                                </c:if>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="userDropdown">
                                 <c:if test="${sessionScope.currentUser.role == 'STUDENT'}">
@@ -99,6 +121,27 @@
                                     <li>
                                         <a class="dropdown-item" href="${pageContext.request.contextPath}/student/applications">
                                             <i class="bi bi-file-earmark-check me-2 text-primary"></i> My Applications
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                </c:if>
+                                <c:if test="${sessionScope.currentUser.role == 'COMPANY_HR'}">
+                                    <li class="dropdown-header text-uppercase text-muted small fw-bold">
+                                        <i class="bi bi-building me-1"></i> ${sessionScope.currentUser.companyName != null ? sessionScope.currentUser.companyName : 'Company Portal'}
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/recruiter/dashboard">
+                                            <i class="bi bi-speedometer2 me-2 text-success"></i> HR Dashboard
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/recruiter/jobs">
+                                            <i class="bi bi-briefcase me-2 text-success"></i> Manage Job Drives
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/recruiter/applications">
+                                            <i class="bi bi-people me-2 text-success"></i> Applicant Candidates
                                         </a>
                                     </li>
                                     <li><hr class="dropdown-divider"></li>

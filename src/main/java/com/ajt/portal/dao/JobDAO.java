@@ -283,6 +283,95 @@ public class JobDAO {
         return list;
     }
 
+    public Job findByIdAndCompany(int jobId, int companyId) throws SQLException {
+        String sql = "SELECT j.job_id, j.company_id, j.job_title, j.description, j.location, j.minimum_cgpa, j.eligible_branch, " +
+                     "j.deadline, j.job_status, j.created_at, " +
+                     "c.company_name, c.industry AS company_industry, c.location AS company_location, c.website AS company_website, " +
+                     "(SELECT COUNT(*) FROM applications a WHERE a.job_id = j.job_id) AS applicant_count " +
+                     "FROM jobs j " +
+                     "JOIN companies c ON j.company_id = c.company_id " +
+                     "WHERE j.job_id = ? AND j.company_id = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, jobId);
+            stmt.setInt(2, companyId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapRow(rs);
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean updateForCompany(Job job) throws SQLException {
+        String sql = "UPDATE jobs SET job_title = ?, description = ?, location = ?, " +
+                     "minimum_cgpa = ?, eligible_branch = ?, deadline = ?, job_status = ? " +
+                     "WHERE job_id = ? AND company_id = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, job.getJobTitle());
+            stmt.setString(2, job.getDescription());
+            stmt.setString(3, job.getLocation());
+            stmt.setBigDecimal(4, job.getMinimumCgpa());
+            stmt.setString(5, job.getEligibleBranch());
+            stmt.setDate(6, job.getDeadline());
+            stmt.setString(7, job.getJobStatus());
+            stmt.setInt(8, job.getJobId());
+            stmt.setInt(9, job.getCompanyId());
+            return stmt.executeUpdate() > 0;
+        }
+    }
+
+    public boolean updateStatusForCompany(int jobId, int companyId, String status) throws SQLException {
+        String sql = "UPDATE jobs SET job_status = ? WHERE job_id = ? AND company_id = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, status);
+            stmt.setInt(2, jobId);
+            stmt.setInt(3, companyId);
+            return stmt.executeUpdate() > 0;
+        }
+    }
+
+    public boolean deleteForCompany(int jobId, int companyId) throws SQLException {
+        String sql = "DELETE FROM jobs WHERE job_id = ? AND company_id = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, jobId);
+            stmt.setInt(2, companyId);
+            return stmt.executeUpdate() > 0;
+        }
+    }
+
+    public int getActiveJobsCountByCompany(int companyId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM jobs WHERE company_id = ? AND job_status = 'ACTIVE' AND deadline >= CURDATE()";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, companyId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
+
+    public int getTotalJobsCountByCompany(int companyId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM jobs WHERE company_id = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, companyId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
+
     private Job mapRow(ResultSet rs) throws SQLException {
         Job j = new Job();
         j.setJobId(rs.getInt("job_id"));

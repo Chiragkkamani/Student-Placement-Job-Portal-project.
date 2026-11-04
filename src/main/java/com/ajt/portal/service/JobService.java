@@ -125,6 +125,62 @@ public class JobService {
         }
     }
 
+    public Job getJobByIdAndCompany(int jobId, int companyId) {
+        try {
+            return jobDAO.findByIdAndCompany(jobId, companyId);
+        } catch (SQLException e) {
+            logger.error("Error fetching job {} for company {}: {}", jobId, companyId, e.getMessage());
+            throw new RuntimeException("Could not retrieve job for company.", e);
+        }
+    }
+
+    public boolean updateJobForCompany(Job job, int companyId) {
+        if (job.getCompanyId() != companyId) {
+            throw new IllegalArgumentException("Unauthorized to modify job belonging to another company.");
+        }
+        validateJob(job);
+        try {
+            return jobDAO.updateForCompany(job);
+        } catch (SQLException e) {
+            logger.error("Error updating job {} for company {}: {}", job.getJobId(), companyId, e.getMessage());
+            throw new RuntimeException("Could not update job for company.", e);
+        }
+    }
+
+    public boolean updateJobStatusForCompany(int jobId, int companyId, String status) {
+        try {
+            return jobDAO.updateStatusForCompany(jobId, companyId, status);
+        } catch (SQLException e) {
+            logger.error("Error updating status for job {} and company {}: {}", jobId, companyId, e.getMessage());
+            throw new RuntimeException("Could not update job status.", e);
+        }
+    }
+
+    public boolean deleteJobForCompany(int jobId, int companyId) {
+        try {
+            return jobDAO.deleteForCompany(jobId, companyId);
+        } catch (SQLException e) {
+            logger.error("Error deleting job {} for company {}: {}", jobId, companyId, e.getMessage());
+            throw new RuntimeException("Could not delete job for company.", e);
+        }
+    }
+
+    public int getActiveJobsCountByCompany(int companyId) {
+        try {
+            return jobDAO.getActiveJobsCountByCompany(companyId);
+        } catch (SQLException e) {
+            return 0;
+        }
+    }
+
+    public int getTotalJobsCountByCompany(int companyId) {
+        try {
+            return jobDAO.getTotalJobsCountByCompany(companyId);
+        } catch (SQLException e) {
+            return 0;
+        }
+    }
+
     private void validateJob(Job job) throws IllegalArgumentException {
         if (job.getCompanyId() <= 0) {
             throw new IllegalArgumentException("Company must be selected.");

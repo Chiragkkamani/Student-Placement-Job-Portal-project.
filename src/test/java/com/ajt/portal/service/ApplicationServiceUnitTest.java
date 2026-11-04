@@ -111,5 +111,16 @@ public class ApplicationServiceUnitTest {
         );
         assertTrue(ex.getMessage().contains("already applied"));
     }
+
+    @Test
+    public void testHrCannotUpdateAnotherCompanyApplication() throws SQLException {
+        // Application belongs to Company 2, but Recruiter is from Company 1
+        when(applicationDAO.findByIdAndCompany(50, 1)).thenReturn(null);
+
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () ->
+            applicationService.updateApplicationStatusForCompany(50, 1, "SHORTLISTED", "Notes", 27)
+        );
+        assertTrue(ex.getMessage().contains("unauthorized"));
+    }
 }
 

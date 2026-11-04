@@ -34,6 +34,8 @@ CREATE TABLE IF NOT EXISTS companies (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+ALTER TABLE users ADD COLUMN IF NOT EXISTS company_id INT DEFAULT NULL;
+
 CREATE TABLE IF NOT EXISTS jobs (
     job_id INT AUTO_INCREMENT PRIMARY KEY,
     company_id INT NOT NULL,
@@ -73,33 +75,38 @@ CREATE TABLE IF NOT EXISTS application_status_history (
 -- Initial Users (Password: chirag@123 for Admin / Password@123 for Students)
 -- Hash for chirag@123: $2a$10$O73KViZ3fUTOfY3mPd4vfeZc6c4bZhnGqI8udNldVIkpvg4ircGem
 -- Hash for Password@123: $2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe
-MERGE INTO users (full_name, email, password_hash, role, account_status) KEY(email) VALUES
-('Placement Administrator', 'admin@placement.edu', '$2a$10$O73KViZ3fUTOfY3mPd4vfeZc6c4bZhnGqI8udNldVIkpvg4ircGem', 'ADMIN', 'ACTIVE'),
-('Aarav Sharma', 'aarav.sharma@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Diya Patel', 'diya.patel@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Rohan Verma', 'rohan.verma@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Ananya Iyer', 'ananya.iyer@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Chirag Administrator', 'chiragadmin', '$2a$10$O73KViZ3fUTOfY3mPd4vfeZc6c4bZhnGqI8udNldVIkpvg4ircGem', 'ADMIN', 'ACTIVE'),
-('Aditya Sengupta', 'aditya.sengupta@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Pooja Nair', 'pooja.nair@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Gurpreet Singh', 'gurpreet.singh@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Sneha Kulkarni', 'sneha.kulkarni@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Karthik Venkatesh', 'karthik.venkatesh@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Tanvi Deshmukh', 'tanvi.deshmukh@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Harshvardhan Rathore', 'harsh.rathore@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Rhea Bhattacharya', 'rhea.bhattacharya@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Sai Krishna Teja', 'sai.krishna@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Meera Nambiar', 'meera.nambiar@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Abhishek Mishra', 'abhishek.mishra@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Neha Choudhary', 'neha.choudhary@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Vikramaditya Rao', 'vikram.rao@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Shruti Majumdar', 'shruti.majumdar@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Manish Chawla', 'manish.chawla@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Kavya Hegde', 'kavya.hegde@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Tsering Angmo', 'tsering.angmo@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Pranav Trivedi', 'pranav.trivedi@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Deepika Reddy', 'deepika.reddy@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-('Mohammad Zubair', 'mohammad.zubair@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE');
+MERGE INTO users (full_name, email, password_hash, role, account_status, company_id) KEY(email) VALUES
+('Placement Administrator', 'admin@placement.edu', '$2a$10$O73KViZ3fUTOfY3mPd4vfeZc6c4bZhnGqI8udNldVIkpvg4ircGem', 'ADMIN', 'ACTIVE', NULL),
+('Aarav Sharma', 'aarav.sharma@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Diya Patel', 'diya.patel@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Rohan Verma', 'rohan.verma@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Ananya Iyer', 'ananya.iyer@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Chirag Administrator', 'chiragadmin', '$2a$10$O73KViZ3fUTOfY3mPd4vfeZc6c4bZhnGqI8udNldVIkpvg4ircGem', 'ADMIN', 'ACTIVE', NULL),
+('Aditya Sengupta', 'aditya.sengupta@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Pooja Nair', 'pooja.nair@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Gurpreet Singh', 'gurpreet.singh@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Sneha Kulkarni', 'sneha.kulkarni@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Karthik Venkatesh', 'karthik.venkatesh@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Tanvi Deshmukh', 'tanvi.deshmukh@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Harshvardhan Rathore', 'harsh.rathore@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Rhea Bhattacharya', 'rhea.bhattacharya@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Sai Krishna Teja', 'sai.krishna@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Meera Nambiar', 'meera.nambiar@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Abhishek Mishra', 'abhishek.mishra@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Neha Choudhary', 'neha.choudhary@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Vikramaditya Rao', 'vikram.rao@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Shruti Majumdar', 'shruti.majumdar@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Manish Chawla', 'manish.chawla@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Kavya Hegde', 'kavya.hegde@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Tsering Angmo', 'tsering.angmo@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Pranav Trivedi', 'pranav.trivedi@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Deepika Reddy', 'deepika.reddy@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Mohammad Zubair', 'mohammad.zubair@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NULL),
+('Priya Sharma', 'google.hr@placement.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'COMPANY_HR', 'ACTIVE', 1),
+('Google Cloud HR', 'googlehr', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'COMPANY_HR', 'ACTIVE', 1),
+('Vikram Malhotra', 'tcs.hr@placement.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'COMPANY_HR', 'ACTIVE', 4),
+('TCS Recruiter', 'tcshr', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'COMPANY_HR', 'ACTIVE', 4),
+('Sneha Kapadia', 'ms.hr@placement.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'COMPANY_HR', 'ACTIVE', 2);
 
 -- Initial Students (24 Total from Across India)
 INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)

@@ -22,6 +22,7 @@ public class AdminUserServlet extends HttpServlet {
 
     private final UserService userService = new UserService();
     private final StudentService studentService = new StudentService();
+    private final com.ajt.portal.service.CompanyService companyService = new com.ajt.portal.service.CompanyService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -35,6 +36,7 @@ public class AdminUserServlet extends HttpServlet {
         int totalUsers = allUsers.size();
         int adminCount = 0;
         int studentCount = 0;
+        int companyHrCount = 0;
         int activeCount = 0;
 
         for (User u : allUsers) {
@@ -42,6 +44,8 @@ public class AdminUserServlet extends HttpServlet {
                 adminCount++;
             } else if (User.ROLE_STUDENT.equalsIgnoreCase(u.getRole())) {
                 studentCount++;
+            } else if (User.ROLE_COMPANY_HR.equalsIgnoreCase(u.getRole())) {
+                companyHrCount++;
             }
             if (User.STATUS_ACTIVE.equalsIgnoreCase(u.getAccountStatus())) {
                 activeCount++;
@@ -66,9 +70,11 @@ public class AdminUserServlet extends HttpServlet {
         request.setAttribute("totalUsers", totalUsers);
         request.setAttribute("adminCount", adminCount);
         request.setAttribute("studentCount", studentCount);
+        request.setAttribute("companyHrCount", companyHrCount);
         request.setAttribute("activeCount", activeCount);
         request.setAttribute("selectedRole", roleFilter);
         request.setAttribute("search", search);
+        request.setAttribute("companies", companyService.getAllCompanies(null));
         request.setAttribute("activePage", "admin-users");
 
         request.getRequestDispatcher("/WEB-INF/views/admin/users.jsp").forward(request, response);
@@ -119,9 +125,17 @@ public class AdminUserServlet extends HttpServlet {
                         userService.createAccountByAdmin(fullName, email, password, role, status);
                         session.setAttribute("flashSuccess", "Student user account successfully created for " + fullName + ".");
                     }
+                } else if (User.ROLE_COMPANY_HR.equalsIgnoreCase(role)) {
+                    String companyIdStr = request.getParameter("companyId");
+                    if (companyIdStr == null || companyIdStr.trim().isEmpty()) {
+                        throw new IllegalArgumentException("Please select a company for the Company HR account.");
+                    }
+                    int companyId = Integer.parseInt(companyIdStr.trim());
+                    userService.createAccountByAdmin(fullName, email, password, User.ROLE_COMPANY_HR, status, companyId);
+                    session.setAttribute("flashSuccess", "Company HR recruiter account successfully created for " + fullName + " (" + email + ").");
                 } else {
                     // Create Admin account
-                    userService.createAccountByAdmin(fullName, email, password, User.ROLE_ADMIN, status);
+                    userService.createAccountByAdmin(fullName, email, password, User.ROLE_ADMIN, status, null);
                     session.setAttribute("flashSuccess", "Administrator account successfully created for " + fullName + " (" + email + ").");
                 }
 

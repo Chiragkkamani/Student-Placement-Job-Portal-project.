@@ -179,10 +179,15 @@ public class UserService {
     }
 
     /**
-     * Admin creates an account directly (Admin or Student).
+     * Admin creates an account directly (Admin, Company HR, or Student).
      */
     public User createAccountByAdmin(String fullName, String emailOrUsername, String plainPassword, String role,
             String status) {
+        return createAccountByAdmin(fullName, emailOrUsername, plainPassword, role, status, null);
+    }
+
+    public User createAccountByAdmin(String fullName, String emailOrUsername, String plainPassword, String role,
+            String status, Integer companyId) {
         if (!ValidationUtil.isNotEmpty(fullName)) {
             throw new IllegalArgumentException("Full name is required.");
         }
@@ -192,8 +197,11 @@ public class UserService {
         if (plainPassword == null || plainPassword.length() < 6) {
             throw new IllegalArgumentException("Password must be at least 6 characters.");
         }
-        if (!User.ROLE_ADMIN.equalsIgnoreCase(role) && !User.ROLE_STUDENT.equalsIgnoreCase(role)) {
+        if (!User.ROLE_ADMIN.equalsIgnoreCase(role) && !User.ROLE_STUDENT.equalsIgnoreCase(role) && !User.ROLE_COMPANY_HR.equalsIgnoreCase(role)) {
             throw new IllegalArgumentException("Invalid role specified.");
+        }
+        if (User.ROLE_COMPANY_HR.equalsIgnoreCase(role) && (companyId == null || companyId <= 0)) {
+            throw new IllegalArgumentException("Company selection is required for Company HR accounts.");
         }
 
         try {
@@ -208,6 +216,9 @@ public class UserService {
             user.setPasswordHash(PasswordUtil.hashPassword(plainPassword));
             user.setRole(role.toUpperCase());
             user.setAccountStatus(ValidationUtil.isNotEmpty(status) ? status.toUpperCase() : User.STATUS_ACTIVE);
+            if (User.ROLE_COMPANY_HR.equalsIgnoreCase(role)) {
+                user.setCompanyId(companyId);
+            }
 
             int userId = userDAO.create(user);
             if (userId <= 0) {
