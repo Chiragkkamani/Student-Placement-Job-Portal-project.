@@ -73,20 +73,154 @@ CREATE TABLE IF NOT EXISTS application_status_history (
 -- Initial Users (Password: chirag@123 for Admin / Password@123 for Students)
 -- Hash for chirag@123: $2a$10$O73KViZ3fUTOfY3mPd4vfeZc6c4bZhnGqI8udNldVIkpvg4ircGem
 -- Hash for Password@123: $2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe
-MERGE INTO users (user_id, full_name, email, password_hash, role, account_status) KEY(email) VALUES
-(1, 'Placement Administrator', 'admin@placement.edu', '$2a$10$O73KViZ3fUTOfY3mPd4vfeZc6c4bZhnGqI8udNldVIkpvg4ircGem', 'ADMIN', 'ACTIVE'),
-(2, 'Aarav Sharma', 'aarav.sharma@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-(3, 'Diya Patel', 'diya.patel@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-(4, 'Rohan Verma', 'rohan.verma@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-(5, 'Ananya Iyer', 'ananya.iyer@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
-(6, 'Chirag Administrator', 'chiragadmin', '$2a$10$O73KViZ3fUTOfY3mPd4vfeZc6c4bZhnGqI8udNldVIkpvg4ircGem', 'ADMIN', 'ACTIVE');
+MERGE INTO users (full_name, email, password_hash, role, account_status) KEY(email) VALUES
+('Placement Administrator', 'admin@placement.edu', '$2a$10$O73KViZ3fUTOfY3mPd4vfeZc6c4bZhnGqI8udNldVIkpvg4ircGem', 'ADMIN', 'ACTIVE'),
+('Aarav Sharma', 'aarav.sharma@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Diya Patel', 'diya.patel@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Rohan Verma', 'rohan.verma@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Ananya Iyer', 'ananya.iyer@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Chirag Administrator', 'chiragadmin', '$2a$10$O73KViZ3fUTOfY3mPd4vfeZc6c4bZhnGqI8udNldVIkpvg4ircGem', 'ADMIN', 'ACTIVE'),
+('Aditya Sengupta', 'aditya.sengupta@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Pooja Nair', 'pooja.nair@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Gurpreet Singh', 'gurpreet.singh@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Sneha Kulkarni', 'sneha.kulkarni@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Karthik Venkatesh', 'karthik.venkatesh@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Tanvi Deshmukh', 'tanvi.deshmukh@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Harshvardhan Rathore', 'harsh.rathore@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Rhea Bhattacharya', 'rhea.bhattacharya@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Sai Krishna Teja', 'sai.krishna@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Meera Nambiar', 'meera.nambiar@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Abhishek Mishra', 'abhishek.mishra@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Neha Choudhary', 'neha.choudhary@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Vikramaditya Rao', 'vikram.rao@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Shruti Majumdar', 'shruti.majumdar@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Manish Chawla', 'manish.chawla@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Kavya Hegde', 'kavya.hegde@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Tsering Angmo', 'tsering.angmo@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Pranav Trivedi', 'pranav.trivedi@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Deepika Reddy', 'deepika.reddy@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE'),
+('Mohammad Zubair', 'mohammad.zubair@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE');
 
--- Initial Students
-MERGE INTO students (student_id, user_id, enrollment_number, branch, semester, cgpa, phone, resume_path) KEY(enrollment_number) VALUES
-(1, 2, 'EN2024CS0101', 'Computer Science', 8, 8.75, '+91 9876543210', 'uploads/resumes/aarav_resume.pdf'),
-(2, 3, 'EN2024IT0202', 'Information Technology', 8, 9.20, '+91 9876543211', 'uploads/resumes/diya_resume.pdf'),
-(3, 4, 'EN2024EC0303', 'Electronics & Comm.', 8, 7.40, '+91 9876543212', NULL),
-(4, 5, 'EN2024ME0404', 'Mechanical Engineering', 8, 8.10, '+91 9876543213', NULL);
+-- Initial Students (24 Total from Across India)
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024CS0101', 'Computer Science', 8, 8.75, '+91 9876543210', 'uploads/resumes/aarav_resume.pdf'
+FROM users u WHERE u.email = 'aarav.sharma@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024CS0101');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024IT0202', 'Information Technology', 8, 9.20, '+91 9876543211', 'uploads/resumes/diya_resume.pdf'
+FROM users u WHERE u.email = 'diya.patel@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024IT0202');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024EC0303', 'Electronics & Comm.', 8, 7.40, '+91 9876543212', NULL
+FROM users u WHERE u.email = 'rohan.verma@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024EC0303');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024ME0404', 'Mechanical Engineering', 8, 8.10, '+91 9876543213', NULL
+FROM users u WHERE u.email = 'ananya.iyer@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024ME0404');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024CS0105', 'Computer Science', 8, 9.15, '+91 9830123456', 'uploads/resumes/aditya_resume.pdf'
+FROM users u WHERE u.email = 'aditya.sengupta@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024CS0105');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024IT0206', 'Information Technology', 8, 8.90, '+91 9447123456', 'uploads/resumes/pooja_resume.pdf'
+FROM users u WHERE u.email = 'pooja.nair@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024IT0206');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024ME0407', 'Mechanical Engineering', 8, 7.85, '+91 9814123456', NULL
+FROM users u WHERE u.email = 'gurpreet.singh@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024ME0407');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024CS0108', 'Computer Science', 8, 9.45, '+91 9822123456', 'uploads/resumes/sneha_resume.pdf'
+FROM users u WHERE u.email = 'sneha.kulkarni@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024CS0108');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024EC0309', 'Electronics & Comm.', 8, 8.60, '+91 9840123456', 'uploads/resumes/karthik_resume.pdf'
+FROM users u WHERE u.email = 'karthik.venkatesh@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024EC0309');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024IT0210', 'Information Technology', 8, 8.35, '+91 9765123456', NULL
+FROM users u WHERE u.email = 'tanvi.deshmukh@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024IT0210');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024ME0411', 'Mechanical Engineering', 8, 7.50, '+91 9414123456', NULL
+FROM users u WHERE u.email = 'harsh.rathore@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024ME0411');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024CS0112', 'Computer Science', 8, 9.05, '+91 9435123456', 'uploads/resumes/rhea_resume.pdf'
+FROM users u WHERE u.email = 'rhea.bhattacharya@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024CS0112');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024EC0313', 'Electronics & Comm.', 8, 8.40, '+91 9848123456', 'uploads/resumes/sai_resume.pdf'
+FROM users u WHERE u.email = 'sai.krishna@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024EC0313');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024CS0114', 'Computer Science', 8, 9.30, '+91 9446123456', 'uploads/resumes/meera_resume.pdf'
+FROM users u WHERE u.email = 'meera.nambiar@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024CS0114');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024IT0215', 'Information Technology', 8, 7.95, '+91 9450123456', NULL
+FROM users u WHERE u.email = 'abhishek.mishra@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024IT0215');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024CS0116', 'Computer Science', 8, 8.70, '+91 9431123456', 'uploads/resumes/neha_resume.pdf'
+FROM users u WHERE u.email = 'neha.choudhary@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024CS0116');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024ME0417', 'Mechanical Engineering', 8, 8.20, '+91 9880123456', 'uploads/resumes/vikram_resume.pdf'
+FROM users u WHERE u.email = 'vikram.rao@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024ME0417');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024EC0318', 'Electronics & Comm.', 8, 8.15, '+91 9437123456', NULL
+FROM users u WHERE u.email = 'shruti.majumdar@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024EC0318');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024CS0119', 'Computer Science', 8, 9.60, '+91 9811123456', 'uploads/resumes/manish_resume.pdf'
+FROM users u WHERE u.email = 'manish.chawla@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024CS0119');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024IT0220', 'Information Technology', 8, 8.85, '+91 9845123456', 'uploads/resumes/kavya_resume.pdf'
+FROM users u WHERE u.email = 'kavya.hegde@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024IT0220');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024EC0321', 'Electronics & Comm.', 8, 8.00, '+91 9419123456', NULL
+FROM users u WHERE u.email = 'tsering.angmo@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024EC0321');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024ME0422', 'Mechanical Engineering', 8, 7.65, '+91 9825123456', NULL
+FROM users u WHERE u.email = 'pranav.trivedi@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024ME0422');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024CS0123', 'Computer Science', 8, 9.25, '+91 9849123456', 'uploads/resumes/deepika_resume.pdf'
+FROM users u WHERE u.email = 'deepika.reddy@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024CS0123');
+
+INSERT INTO students (user_id, enrollment_number, branch, semester, cgpa, phone, resume_path)
+SELECT u.user_id, 'EN2024IT0224', 'Information Technology', 8, 8.55, '+91 9419123457', 'uploads/resumes/zubair_resume.pdf'
+FROM users u WHERE u.email = 'mohammad.zubair@student.edu'
+AND NOT EXISTS (SELECT 1 FROM students s WHERE s.enrollment_number = 'EN2024IT0224');
 
 -- Initial Companies
 MERGE INTO companies (company_id, company_name, industry, location, website, contact_email) KEY(company_name) VALUES
@@ -131,9 +265,78 @@ MERGE INTO jobs (job_id, company_id, job_title, description, location, minimum_c
 (26, 4, 'Automotive Embedded Systems Engineer', 'Program automotive microcontrollers, CAN bus communications, and real-time electronic control unit (ECU) software.', 'Pune, India', 6.80, 'Mechanical Engineering', '2026-12-30', 'ACTIVE');
 
 -- Initial Applications
-MERGE INTO applications (application_id, job_id, student_id, application_status, remarks) KEY(student_id, job_id) VALUES
-(1, 1, 1, 'SHORTLISTED', 'Candidate shortlisted for technical coding interview round.'),
-(2, 2, 2, 'SELECTED', 'Candidate selected after final partner interview. Offer letter released.'),
-(3, 3, 3, 'APPLIED', 'Application under preliminary recruiter review.'),
-(4, 4, 1, 'APPLIED', 'Application submitted successfully.');
+INSERT INTO applications (job_id, student_id, application_status, remarks)
+SELECT 1, s.student_id, 'SHORTLISTED', 'Candidate shortlisted for technical coding interview round.'
+FROM students s WHERE s.enrollment_number = 'EN2024CS0101'
+AND NOT EXISTS (SELECT 1 FROM applications a WHERE a.job_id = 1 AND a.student_id = s.student_id);
+
+INSERT INTO applications (job_id, student_id, application_status, remarks)
+SELECT 2, s.student_id, 'SELECTED', 'Candidate selected after final partner interview. Offer letter released.'
+FROM students s WHERE s.enrollment_number = 'EN2024IT0202'
+AND NOT EXISTS (SELECT 1 FROM applications a WHERE a.job_id = 2 AND a.student_id = s.student_id);
+
+INSERT INTO applications (job_id, student_id, application_status, remarks)
+SELECT 3, s.student_id, 'APPLIED', 'Application under preliminary recruiter review.'
+FROM students s WHERE s.enrollment_number = 'EN2024EC0303'
+AND NOT EXISTS (SELECT 1 FROM applications a WHERE a.job_id = 3 AND a.student_id = s.student_id);
+
+INSERT INTO applications (job_id, student_id, application_status, remarks)
+SELECT 4, s.student_id, 'APPLIED', 'Application submitted successfully.'
+FROM students s WHERE s.enrollment_number = 'EN2024CS0101'
+AND NOT EXISTS (SELECT 1 FROM applications a WHERE a.job_id = 4 AND a.student_id = s.student_id);
+
+INSERT INTO applications (job_id, student_id, application_status, remarks)
+SELECT 1, s.student_id, 'SHORTLISTED', 'High CGPA candidate. Qualified for Round 2 Technical Interview.'
+FROM students s WHERE s.enrollment_number = 'EN2024CS0105'
+AND NOT EXISTS (SELECT 1 FROM applications a WHERE a.job_id = 1 AND a.student_id = s.student_id);
+
+INSERT INTO applications (job_id, student_id, application_status, remarks)
+SELECT 2, s.student_id, 'SELECTED', 'Excellent coding assessment score. Final offer released (CTC: 24 LPA).'
+FROM students s WHERE s.enrollment_number = 'EN2024CS0108'
+AND NOT EXISTS (SELECT 1 FROM applications a WHERE a.job_id = 2 AND a.student_id = s.student_id);
+
+INSERT INTO applications (job_id, student_id, application_status, remarks)
+SELECT 7, s.student_id, 'APPLIED', 'Application under review by technical hiring manager.'
+FROM students s WHERE s.enrollment_number = 'EN2024IT0206'
+AND NOT EXISTS (SELECT 1 FROM applications a WHERE a.job_id = 7 AND a.student_id = s.student_id);
+
+INSERT INTO applications (job_id, student_id, application_status, remarks)
+SELECT 8, s.student_id, 'SHORTLISTED', 'Cleared preliminary cybersecurity screening round.'
+FROM students s WHERE s.enrollment_number = 'EN2024CS0112'
+AND NOT EXISTS (SELECT 1 FROM applications a WHERE a.job_id = 8 AND a.student_id = s.student_id);
+
+INSERT INTO applications (job_id, student_id, application_status, remarks)
+SELECT 9, s.student_id, 'APPLIED', 'Application submitted for Full Stack Cloud position.'
+FROM students s WHERE s.enrollment_number = 'EN2024CS0114'
+AND NOT EXISTS (SELECT 1 FROM applications a WHERE a.job_id = 9 AND a.student_id = s.student_id);
+
+INSERT INTO applications (job_id, student_id, application_status, remarks)
+SELECT 10, s.student_id, 'SELECTED', 'Selected for Oracle Cloud Infrastructure engineering team.'
+FROM students s WHERE s.enrollment_number = 'EN2024IT0210'
+AND NOT EXISTS (SELECT 1 FROM applications a WHERE a.job_id = 10 AND a.student_id = s.student_id);
+
+INSERT INTO applications (job_id, student_id, application_status, remarks)
+SELECT 11, s.student_id, 'INTERVIEW_SCHEDULED', 'Technical Interview scheduled for next week.'
+FROM students s WHERE s.enrollment_number = 'EN2024EC0309'
+AND NOT EXISTS (SELECT 1 FROM applications a WHERE a.job_id = 11 AND a.student_id = s.student_id);
+
+INSERT INTO applications (job_id, student_id, application_status, remarks)
+SELECT 13, s.student_id, 'SELECTED', 'Offered Quantitative Developer role at Goldman Sachs.'
+FROM students s WHERE s.enrollment_number = 'EN2024CS0119'
+AND NOT EXISTS (SELECT 1 FROM applications a WHERE a.job_id = 13 AND a.student_id = s.student_id);
+
+INSERT INTO applications (job_id, student_id, application_status, remarks)
+SELECT 14, s.student_id, 'SHORTLISTED', 'Shortlisted for Intel Hardware test round.'
+FROM students s WHERE s.enrollment_number = 'EN2024EC0318'
+AND NOT EXISTS (SELECT 1 FROM applications a WHERE a.job_id = 14 AND a.student_id = s.student_id);
+
+INSERT INTO applications (job_id, student_id, application_status, remarks)
+SELECT 16, s.student_id, 'APPLIED', 'Application submitted for AI/ML Specialist opening.'
+FROM students s WHERE s.enrollment_number = 'EN2024CS0123'
+AND NOT EXISTS (SELECT 1 FROM applications a WHERE a.job_id = 16 AND a.student_id = s.student_id);
+
+INSERT INTO applications (job_id, student_id, application_status, remarks)
+SELECT 23, s.student_id, 'SHORTLISTED', 'Shortlisted based on IT and Distributed Systems coursework.'
+FROM students s WHERE s.enrollment_number = 'EN2024IT0224'
+AND NOT EXISTS (SELECT 1 FROM applications a WHERE a.job_id = 23 AND a.student_id = s.student_id);
 

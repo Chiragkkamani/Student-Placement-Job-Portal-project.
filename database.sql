@@ -145,14 +145,54 @@ INSERT INTO `users` (`user_id`, `full_name`, `email`, `password_hash`, `role`, `
 (3, 'Diya Patel', 'diya.patel@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
 (4, 'Rohan Verma', 'rohan.verma@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
 (5, 'Ananya Iyer', 'ananya.iyer@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
-(6, 'Chirag Administrator', 'chiragadmin', '$2a$10$O73KViZ3fUTOfY3mPd4vfeZc6c4bZhnGqI8udNldVIkpvg4ircGem', 'ADMIN', 'ACTIVE', NOW());
+(6, 'Chirag Administrator', 'chiragadmin', '$2a$10$O73KViZ3fUTOfY3mPd4vfeZc6c4bZhnGqI8udNldVIkpvg4ircGem', 'ADMIN', 'ACTIVE', NOW()),
+(7, 'Aditya Sengupta', 'aditya.sengupta@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(8, 'Pooja Nair', 'pooja.nair@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(9, 'Gurpreet Singh', 'gurpreet.singh@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(10, 'Sneha Kulkarni', 'sneha.kulkarni@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(11, 'Karthik Venkatesh', 'karthik.venkatesh@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(12, 'Tanvi Deshmukh', 'tanvi.deshmukh@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(13, 'Harshvardhan Rathore', 'harsh.rathore@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(14, 'Rhea Bhattacharya', 'rhea.bhattacharya@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(15, 'Sai Krishna Teja', 'sai.krishna@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(16, 'Meera Nambiar', 'meera.nambiar@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(17, 'Abhishek Mishra', 'abhishek.mishra@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(18, 'Neha Choudhary', 'neha.choudhary@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(19, 'Vikramaditya Rao', 'vikram.rao@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(20, 'Shruti Majumdar', 'shruti.majumdar@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(21, 'Manish Chawla', 'manish.chawla@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(22, 'Kavya Hegde', 'kavya.hegde@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(23, 'Tsering Angmo', 'tsering.angmo@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(24, 'Pranav Trivedi', 'pranav.trivedi@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(25, 'Deepika Reddy', 'deepika.reddy@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW()),
+(26, 'Mohammad Zubair', 'mohammad.zubair@student.edu', '$2a$10$/IUf2j6/ZYHYWB/DTeZkC.jPiJURAIYtTWOXdTG/0TRAFm9zwSPEe', 'STUDENT', 'ACTIVE', NOW());
 
--- 2. Insert Students
+-- 2. Insert Students (24 Total from Across India)
 INSERT INTO `students` (`student_id`, `user_id`, `enrollment_number`, `branch`, `semester`, `cgpa`, `phone`, `resume_path`) VALUES
 (1, 2, 'EN2024CS0101', 'Computer Science', 8, 8.75, '+91 9876543210', 'uploads/resumes/aarav_resume.pdf'),
 (2, 3, 'EN2024IT0202', 'Information Technology', 8, 9.20, '+91 9876543211', 'uploads/resumes/diya_resume.pdf'),
 (3, 4, 'EN2024EC0303', 'Electronics & Comm.', 8, 7.40, '+91 9876543212', NULL),
-(4, 5, 'EN2024ME0404', 'Mechanical Engineering', 8, 8.10, '+91 9876543213', NULL);
+(4, 5, 'EN2024ME0404', 'Mechanical Engineering', 8, 8.10, '+91 9876543213', NULL),
+(5, 7, 'EN2024CS0105', 'Computer Science', 8, 9.15, '+91 9830123456', 'uploads/resumes/aditya_resume.pdf'),
+(6, 8, 'EN2024IT0206', 'Information Technology', 8, 8.90, '+91 9447123456', 'uploads/resumes/pooja_resume.pdf'),
+(7, 9, 'EN2024ME0407', 'Mechanical Engineering', 8, 7.85, '+91 9814123456', NULL),
+(8, 10, 'EN2024CS0108', 'Computer Science', 8, 9.45, '+91 9822123456', 'uploads/resumes/sneha_resume.pdf'),
+(9, 11, 'EN2024EC0309', 'Electronics & Comm.', 8, 8.60, '+91 9840123456', 'uploads/resumes/karthik_resume.pdf'),
+(10, 12, 'EN2024IT0210', 'Information Technology', 8, 8.35, '+91 9765123456', NULL),
+(11, 13, 'EN2024ME0411', 'Mechanical Engineering', 8, 7.50, '+91 9414123456', NULL),
+(12, 14, 'EN2024CS0112', 'Computer Science', 8, 9.05, '+91 9435123456', 'uploads/resumes/rhea_resume.pdf'),
+(13, 15, 'EN2024EC0313', 'Electronics & Comm.', 8, 8.40, '+91 9848123456', 'uploads/resumes/sai_resume.pdf'),
+(14, 16, 'EN2024CS0114', 'Computer Science', 8, 9.30, '+91 9446123456', 'uploads/resumes/meera_resume.pdf'),
+(15, 17, 'EN2024IT0215', 'Information Technology', 8, 7.95, '+91 9450123456', NULL),
+(16, 18, 'EN2024CS0116', 'Computer Science', 8, 8.70, '+91 9431123456', 'uploads/resumes/neha_resume.pdf'),
+(17, 19, 'EN2024ME0417', 'Mechanical Engineering', 8, 8.20, '+91 9880123456', 'uploads/resumes/vikram_resume.pdf'),
+(18, 20, 'EN2024EC0318', 'Electronics & Comm.', 8, 8.15, '+91 9437123456', NULL),
+(19, 21, 'EN2024CS0119', 'Computer Science', 8, 9.60, '+91 9811123456', 'uploads/resumes/manish_resume.pdf'),
+(20, 22, 'EN2024IT0220', 'Information Technology', 8, 8.85, '+91 9845123456', 'uploads/resumes/kavya_resume.pdf'),
+(21, 23, 'EN2024EC0321', 'Electronics & Comm.', 8, 8.00, '+91 9419123456', NULL),
+(22, 24, 'EN2024ME0422', 'Mechanical Engineering', 8, 7.65, '+91 9825123456', NULL),
+(23, 25, 'EN2024CS0123', 'Computer Science', 8, 9.25, '+91 9849123456', 'uploads/resumes/deepika_resume.pdf'),
+(24, 26, 'EN2024IT0224', 'Information Technology', 8, 8.55, '+91 9419123457', 'uploads/resumes/zubair_resume.pdf');
 
 -- 3. Insert Companies
 INSERT INTO `companies` (`company_id`, `company_name`, `industry`, `location`, `website`, `contact_email`, `created_at`) VALUES
@@ -201,7 +241,18 @@ INSERT INTO `applications` (`application_id`, `job_id`, `student_id`, `applicati
 (1, 1, 1, NOW() - INTERVAL 5 DAY, 'SHORTLISTED', 'Candidate shortlisted for technical coding interview round.'),
 (2, 2, 2, NOW() - INTERVAL 4 DAY, 'SELECTED', 'Candidate selected after final partner interview. Offer letter released.'),
 (3, 3, 3, NOW() - INTERVAL 3 DAY, 'APPLIED', 'Application under preliminary recruiter review.'),
-(4, 4, 1, NOW() - INTERVAL 2 DAY, 'APPLIED', 'Application submitted successfully.');
+(4, 4, 1, NOW() - INTERVAL 2 DAY, 'APPLIED', 'Application submitted successfully.'),
+(5, 1, 5, NOW() - INTERVAL 4 DAY, 'SHORTLISTED', 'High CGPA candidate. Qualified for Round 2 Technical Interview.'),
+(6, 2, 8, NOW() - INTERVAL 3 DAY, 'SELECTED', 'Excellent coding assessment score. Final offer released (CTC: 24 LPA).'),
+(7, 7, 6, NOW() - INTERVAL 2 DAY, 'APPLIED', 'Application under review by technical hiring manager.'),
+(8, 8, 12, NOW() - INTERVAL 2 DAY, 'SHORTLISTED', 'Cleared preliminary cybersecurity screening round.'),
+(9, 9, 14, NOW() - INTERVAL 1 DAY, 'APPLIED', 'Application submitted for Full Stack Cloud position.'),
+(10, 10, 10, NOW() - INTERVAL 3 DAY, 'SELECTED', 'Selected for Oracle Cloud Infrastructure engineering team.'),
+(11, 11, 9, NOW() - INTERVAL 2 DAY, 'INTERVIEW_SCHEDULED', 'Technical Interview scheduled for next week.'),
+(12, 13, 19, NOW() - INTERVAL 3 DAY, 'SELECTED', 'Offered Quantitative Developer role at Goldman Sachs.'),
+(13, 14, 18, NOW() - INTERVAL 1 DAY, 'SHORTLISTED', 'Shortlisted for Intel Hardware test round.'),
+(14, 16, 23, NOW() - INTERVAL 1 DAY, 'APPLIED', 'Application submitted for AI/ML Specialist opening.'),
+(15, 23, 24, NOW() - INTERVAL 2 DAY, 'SHORTLISTED', 'Shortlisted based on IT and Distributed Systems coursework.');
 
 -- 6. Insert Application Status History
 INSERT INTO `application_status_history` (`history_id`, `application_id`, `previous_status`, `new_status`, `changed_by`, `change_timestamp`) VALUES
