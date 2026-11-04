@@ -96,9 +96,43 @@ public class RecruiterApplicationServlet extends HttpServlet {
         }
 
         String action = request.getParameter("action");
+        String redirectTarget = request.getParameter("redirect");
+        if (redirectTarget == null || redirectTarget.trim().isEmpty() || !redirectTarget.startsWith("/")) {
+            redirectTarget = "/recruiter/applications";
+        }
 
         try {
-            if ("updateStatus".equalsIgnoreCase(action)) {
+            if ("accept".equalsIgnoreCase(action) || "quickAccept".equalsIgnoreCase(action)) {
+                int applicationId = Integer.parseInt(request.getParameter("applicationId"));
+                String remarks = request.getParameter("remarks");
+                if (remarks == null || remarks.trim().isEmpty()) {
+                    remarks = "Candidate accepted and selected for hire by " + (currentUser.getCompanyName() != null ? currentUser.getCompanyName() : "recruiter") + ".";
+                }
+
+                applicationService.updateApplicationStatusForCompany(applicationId, companyId, Application.STATUS_SELECTED, remarks, currentUser.getUserId());
+                session.setAttribute("flashSuccess", "Candidate has been ACCEPTED & SELECTED for the placement drive!");
+
+            } else if ("reject".equalsIgnoreCase(action) || "quickReject".equalsIgnoreCase(action)) {
+                int applicationId = Integer.parseInt(request.getParameter("applicationId"));
+                String remarks = request.getParameter("remarks");
+                if (remarks == null || remarks.trim().isEmpty()) {
+                    remarks = "Application not selected after recruiter evaluation.";
+                }
+
+                applicationService.updateApplicationStatusForCompany(applicationId, companyId, Application.STATUS_REJECTED, remarks, currentUser.getUserId());
+                session.setAttribute("flashSuccess", "Candidate application has been marked as REJECTED.");
+
+            } else if ("shortlist".equalsIgnoreCase(action)) {
+                int applicationId = Integer.parseInt(request.getParameter("applicationId"));
+                String remarks = request.getParameter("remarks");
+                if (remarks == null || remarks.trim().isEmpty()) {
+                    remarks = "Candidate shortlisted for technical evaluation / interview.";
+                }
+
+                applicationService.updateApplicationStatusForCompany(applicationId, companyId, Application.STATUS_SHORTLISTED, remarks, currentUser.getUserId());
+                session.setAttribute("flashSuccess", "Candidate successfully SHORTLISTED for interview.");
+
+            } else if ("updateStatus".equalsIgnoreCase(action)) {
                 int applicationId = Integer.parseInt(request.getParameter("applicationId"));
                 String newStatus = request.getParameter("newStatus");
                 String remarks = request.getParameter("remarks");
@@ -112,7 +146,7 @@ public class RecruiterApplicationServlet extends HttpServlet {
             session.setAttribute("flashError", "Failed to update candidate status: " + e.getMessage());
         }
 
-        response.sendRedirect(request.getContextPath() + "/recruiter/applications");
+        response.sendRedirect(request.getContextPath() + redirectTarget);
     }
 
     private void handleHistoryRequest(HttpServletRequest request, HttpServletResponse response, int companyId) throws IOException {

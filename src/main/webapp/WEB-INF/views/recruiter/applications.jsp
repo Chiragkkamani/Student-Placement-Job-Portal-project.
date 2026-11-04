@@ -140,24 +140,64 @@
                                         </c:choose>
                                     </td>
                                     <td class="text-end">
-                                        <div class="btn-group btn-group-sm">
-                                            <!-- Update Status Button -->
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateStatusModal"
-                                                    data-id="${app.applicationId}"
-                                                    data-student="${app.studentName} (${app.enrollmentNumber})"
-                                                    data-job="${app.jobTitle}"
-                                                    data-status="${app.applicationStatus}"
-                                                    data-remarks="${app.remarks}"
-                                                    title="Update Candidate Status">
-                                                <i class="bi bi-pencil-square me-1"></i> Review
-                                            </button>
+                                        <div class="d-inline-flex align-items-center gap-1">
+                                            <!-- Accept Button (Marks as SELECTED) -->
+                                            <c:choose>
+                                                <c:when test="${app.applicationStatus == 'SELECTED'}">
+                                                    <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">
+                                                        <i class="bi bi-check-circle-fill me-1"></i> Accepted
+                                                    </span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <button type="button" class="btn btn-sm btn-success fw-semibold" 
+                                                            data-bs-toggle="modal" data-bs-target="#quickAcceptModal"
+                                                            data-id="${app.applicationId}"
+                                                            data-student="${app.studentName}"
+                                                            data-job="${app.jobTitle}"
+                                                            title="Accept and offer placement">
+                                                        <i class="bi bi-check-circle-fill me-1"></i> Accept
+                                                    </button>
+                                                </c:otherwise>
+                                            </c:choose>
 
-                                            <!-- View Audit History Button -->
-                                            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewHistoryModal"
-                                                    data-id="${app.applicationId}"
-                                                    title="Audit Trail History">
-                                                <i class="bi bi-clock-history"></i>
-                                            </button>
+                                            <!-- Reject Button (Marks as REJECTED) -->
+                                            <c:choose>
+                                                <c:when test="${app.applicationStatus == 'REJECTED'}">
+                                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1">
+                                                        <i class="bi bi-x-circle-fill me-1"></i> Rejected
+                                                    </span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <button type="button" class="btn btn-sm btn-outline-danger fw-semibold" 
+                                                            data-bs-toggle="modal" data-bs-target="#quickRejectModal"
+                                                            data-id="${app.applicationId}"
+                                                            data-student="${app.studentName}"
+                                                            data-job="${app.jobTitle}"
+                                                            title="Reject candidate application">
+                                                        <i class="bi bi-x-circle-fill me-1"></i> Reject
+                                                    </button>
+                                                </c:otherwise>
+                                            </c:choose>
+
+                                            <div class="btn-group btn-group-sm ms-1">
+                                                <!-- Update Status Detailed Button -->
+                                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateStatusModal"
+                                                        data-id="${app.applicationId}"
+                                                        data-student="${app.studentName} (${app.enrollmentNumber})"
+                                                        data-job="${app.jobTitle}"
+                                                        data-status="${app.applicationStatus}"
+                                                        data-remarks="${app.remarks}"
+                                                        title="Detailed Stage Evaluation &amp; Notes">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+
+                                                <!-- View Audit History Button -->
+                                                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewHistoryModal"
+                                                        data-id="${app.applicationId}"
+                                                        title="Audit Trail History">
+                                                    <i class="bi bi-clock-history"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
@@ -257,8 +297,114 @@
     </div>
 </div>
 
+<!-- ========================================== -->
+<!-- Modal: Quick Accept Candidate              -->
+<!-- ========================================== -->
+<div class="modal fade" id="quickAcceptModal" tabindex="-1" aria-labelledby="quickAcceptModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="${pageContext.request.contextPath}/recruiter/applications" method="post">
+                <input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}">
+                <input type="hidden" name="action" value="accept">
+                <input type="hidden" name="applicationId" id="acceptAppId">
+
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title fw-bold" id="quickAcceptModalLabel">
+                        <i class="bi bi-check-circle-fill me-2"></i> Accept &amp; Select Candidate
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="p-3 bg-light rounded-3 mb-3 small border">
+                        <div><strong>Candidate:</strong> <span id="acceptStudentName" class="text-success fw-bold"></span></div>
+                        <div><strong>Role / Drive:</strong> <span id="acceptJobTitle" class="fw-semibold"></span></div>
+                        <div><strong>Company:</strong> ${company.companyName}</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Offer Remarks / Congratulatory Note</label>
+                        <textarea name="remarks" id="acceptRemarks" class="form-control" rows="3"
+                                  placeholder="e.g. Candidate successfully selected for the role. Welcome to the team!"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success px-4 fw-semibold">
+                        <i class="bi bi-check-circle-fill me-1"></i> Confirm Acceptance &amp; Offer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- Modal: Quick Reject Candidate              -->
+<!-- ========================================== -->
+<div class="modal fade" id="quickRejectModal" tabindex="-1" aria-labelledby="quickRejectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="${pageContext.request.contextPath}/recruiter/applications" method="post">
+                <input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}">
+                <input type="hidden" name="action" value="reject">
+                <input type="hidden" name="applicationId" id="rejectAppId">
+
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title fw-bold" id="quickRejectModalLabel">
+                        <i class="bi bi-x-circle-fill me-2"></i> Reject Candidate Application
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="p-3 bg-light rounded-3 mb-3 small border">
+                        <div><strong>Candidate:</strong> <span id="rejectStudentName" class="text-danger fw-bold"></span></div>
+                        <div><strong>Role / Drive:</strong> <span id="rejectJobTitle" class="fw-semibold"></span></div>
+                        <div><strong>Company:</strong> ${company.companyName}</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Rejection Feedback / Notes</label>
+                        <textarea name="remarks" id="rejectRemarks" class="form-control" rows="3"
+                                  placeholder="e.g. Profile does not match the technical criteria for this hiring drive."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger px-4 fw-semibold">
+                        <i class="bi bi-x-circle-fill me-1"></i> Confirm Rejection
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Quick Accept modal
+        const quickAcceptModal = document.getElementById('quickAcceptModal');
+        if (quickAcceptModal) {
+            quickAcceptModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                if (!button) return;
+                document.getElementById('acceptAppId').value = button.getAttribute('data-id') || '';
+                document.getElementById('acceptStudentName').textContent = button.getAttribute('data-student') || '';
+                document.getElementById('acceptJobTitle').textContent = button.getAttribute('data-job') || '';
+                document.getElementById('acceptRemarks').value = 'Candidate selected and offered position at ' + '${company.companyName}';
+            });
+        }
+
+        // Quick Reject modal
+        const quickRejectModal = document.getElementById('quickRejectModal');
+        if (quickRejectModal) {
+            quickRejectModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                if (!button) return;
+                document.getElementById('rejectAppId').value = button.getAttribute('data-id') || '';
+                document.getElementById('rejectStudentName').textContent = button.getAttribute('data-student') || '';
+                document.getElementById('rejectJobTitle').textContent = button.getAttribute('data-job') || '';
+                document.getElementById('rejectRemarks').value = 'Application not selected after recruiter evaluation.';
+            });
+        }
+
         // Status modal
         const updateModal = document.getElementById('updateStatusModal');
         if (updateModal) {

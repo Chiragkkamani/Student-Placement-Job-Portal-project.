@@ -60,6 +60,11 @@
                             <i class="bi bi-people me-1"></i> Applicants
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link ${activePage == 'recruiter-company' ? 'active' : ''}" href="${pageContext.request.contextPath}/recruiter/company">
+                            <i class="bi bi-building-gear me-1"></i> Company Profile
+                        </a>
+                    </li>
                 </c:if>
 
                 <!-- Admin Navigation -->
@@ -142,6 +147,11 @@
                                     <li>
                                         <a class="dropdown-item" href="${pageContext.request.contextPath}/recruiter/applications">
                                             <i class="bi bi-people me-2 text-success"></i> Applicant Candidates
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/recruiter/company">
+                                            <i class="bi bi-building-gear me-2 text-success"></i> Company Profile &amp; Settings
                                         </a>
                                     </li>
                                     <li><hr class="dropdown-divider"></li>

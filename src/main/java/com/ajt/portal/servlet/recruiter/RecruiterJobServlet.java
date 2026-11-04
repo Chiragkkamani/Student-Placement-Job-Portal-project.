@@ -166,18 +166,29 @@ public class RecruiterJobServlet extends HttpServlet {
                 jobService.updateJobForCompany(job, companyId);
                 session.setAttribute("flashSuccess", "Job opening '" + jobTitle + "' updated successfully.");
 
-            } else if ("toggleStatus".equalsIgnoreCase(action)) {
+            } else if ("toggleStatus".equalsIgnoreCase(action) || "deactivate".equalsIgnoreCase(action) || "activate".equalsIgnoreCase(action)) {
                 int jobId = Integer.parseInt(request.getParameter("jobId"));
                 Job existing = jobService.getJobByIdAndCompany(jobId, companyId);
                 if (existing == null) {
                     throw new IllegalStateException("Security restriction: Job not found or belongs to another company.");
                 }
 
-                String currentStatus = request.getParameter("currentStatus");
-                String newStatus = Job.STATUS_ACTIVE.equalsIgnoreCase(currentStatus) ? Job.STATUS_CLOSED : Job.STATUS_ACTIVE;
+                String newStatus;
+                if ("deactivate".equalsIgnoreCase(action)) {
+                    newStatus = Job.STATUS_CLOSED;
+                } else if ("activate".equalsIgnoreCase(action)) {
+                    newStatus = Job.STATUS_ACTIVE;
+                } else {
+                    String currentStatus = request.getParameter("currentStatus");
+                    newStatus = Job.STATUS_ACTIVE.equalsIgnoreCase(currentStatus) ? Job.STATUS_CLOSED : Job.STATUS_ACTIVE;
+                }
 
                 jobService.updateJobStatusForCompany(jobId, companyId, newStatus);
-                session.setAttribute("flashSuccess", "Job drive status updated to " + newStatus + ".");
+                if (Job.STATUS_CLOSED.equalsIgnoreCase(newStatus)) {
+                    session.setAttribute("flashSuccess", "Recruitment drive '" + existing.getJobTitle() + "' has been DEACTIVATED. New student applications are now paused.");
+                } else {
+                    session.setAttribute("flashSuccess", "Recruitment drive '" + existing.getJobTitle() + "' has been ACTIVATED and reopened for applications.");
+                }
 
             } else if ("delete".equalsIgnoreCase(action)) {
                 int jobId = Integer.parseInt(request.getParameter("jobId"));

@@ -133,60 +133,78 @@
                                         <c:choose>
                                             <c:when test="${j.active}">
                                                 <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">
-                                                    <i class="bi bi-check-circle-fill me-1"></i> ACTIVE
+                                                    <i class="bi bi-check-circle-fill me-1"></i> ACTIVE (Open)
                                                 </span>
                                             </c:when>
                                             <c:otherwise>
                                                 <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2 py-1">
-                                                    <i class="bi bi-pause-circle me-1"></i> CLOSED
+                                                    <i class="bi bi-pause-circle-fill me-1"></i> DEACTIVATED
                                                 </span>
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
                                     <td class="text-end">
-                                        <div class="btn-group btn-group-sm">
-                                            <!-- View Public Link -->
-                                            <a href="${pageContext.request.contextPath}/jobs/details?id=${j.jobId}" target="_blank"
-                                               class="btn btn-outline-secondary" title="View Public Posting">
-                                                <i class="bi bi-box-arrow-up-right"></i>
-                                            </a>
+                                        <div class="d-inline-flex align-items-center gap-1">
+                                            <!-- Activate / Deactivate Button -->
+                                            <c:choose>
+                                                <c:when test="${j.active}">
+                                                    <form action="${pageContext.request.contextPath}/recruiter/jobs" method="post" class="d-inline">
+                                                        <input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}">
+                                                        <input type="hidden" name="action" value="deactivate">
+                                                        <input type="hidden" name="jobId" value="${j.jobId}">
+                                                        <button type="submit" class="btn btn-sm btn-outline-warning text-dark fw-semibold"
+                                                                title="Deactivate and pause this recruitment drive"
+                                                                onclick="return confirm('Deactivate recruitment drive \'${j.jobTitle}\'? Students will no longer be able to submit new applications.');">
+                                                            <i class="bi bi-pause-circle me-1"></i> Deactivate
+                                                        </button>
+                                                    </form>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <form action="${pageContext.request.contextPath}/recruiter/jobs" method="post" class="d-inline">
+                                                        <input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}">
+                                                        <input type="hidden" name="action" value="activate">
+                                                        <input type="hidden" name="jobId" value="${j.jobId}">
+                                                        <button type="submit" class="btn btn-sm btn-success fw-semibold"
+                                                                title="Activate and reopen this recruitment drive"
+                                                                onclick="return confirm('Activate recruitment drive \'${j.jobTitle}\'? Applications will be reopened for students.');">
+                                                            <i class="bi bi-play-circle me-1"></i> Activate
+                                                        </button>
+                                                    </form>
+                                                </c:otherwise>
+                                            </c:choose>
 
-                                            <!-- Edit Job Trigger -->
-                                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editRecruiterJobModal"
-                                                    data-id="${j.jobId}"
-                                                    data-title="${j.jobTitle}"
-                                                    data-description="${j.description}"
-                                                    data-location="${j.location}"
-                                                    data-min-cgpa="${j.minimumCgpa}"
-                                                    data-branch="${j.eligibleBranch}"
-                                                    data-deadline="${j.deadline}"
-                                                    data-status="${j.jobStatus}"
-                                                    title="Edit Drive Details">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
+                                            <div class="btn-group btn-group-sm ms-1">
+                                                <!-- View Public Link -->
+                                                <a href="${pageContext.request.contextPath}/jobs/details?id=${j.jobId}" target="_blank"
+                                                   class="btn btn-outline-secondary" title="View Public Posting">
+                                                    <i class="bi bi-box-arrow-up-right"></i>
+                                                </a>
 
-                                            <!-- Toggle Status -->
-                                            <form action="${pageContext.request.contextPath}/recruiter/jobs" method="post" class="d-inline">
-                                                <input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}">
-                                                <input type="hidden" name="action" value="toggleStatus">
-                                                <input type="hidden" name="jobId" value="${j.jobId}">
-                                                <input type="hidden" name="currentStatus" value="${j.jobStatus}">
-                                                <button type="submit" class="btn btn-outline-${j.active ? 'warning text-dark' : 'success'}"
-                                                        title="${j.active ? 'Close Application Window' : 'Re-open Application Window'}">
-                                                    <i class="bi ${j.active ? 'bi-pause-circle' : 'bi-play-circle'}"></i>
+                                                <!-- Edit Job Trigger -->
+                                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editRecruiterJobModal"
+                                                        data-id="${j.jobId}"
+                                                        data-title="${j.jobTitle}"
+                                                        data-description="${j.description}"
+                                                        data-location="${j.location}"
+                                                        data-min-cgpa="${j.minimumCgpa}"
+                                                        data-branch="${j.eligibleBranch}"
+                                                        data-deadline="${j.deadline}"
+                                                        data-status="${j.jobStatus}"
+                                                        title="Edit Drive Details">
+                                                    <i class="bi bi-pencil"></i>
                                                 </button>
-                                            </form>
 
-                                            <!-- Delete Job -->
-                                            <form action="${pageContext.request.contextPath}/recruiter/jobs" method="post" class="d-inline"
-                                                  onsubmit="return confirm('Delete drive \'${j.jobTitle}\'? This cannot be undone.');">
-                                                <input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}">
-                                                <input type="hidden" name="action" value="delete">
-                                                <input type="hidden" name="jobId" value="${j.jobId}">
-                                                <button type="submit" class="btn btn-outline-danger" title="Delete Drive">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </form>
+                                                <!-- Delete Job -->
+                                                <form action="${pageContext.request.contextPath}/recruiter/jobs" method="post" class="d-inline"
+                                                      onsubmit="return confirm('Delete drive \'${j.jobTitle}\'? This cannot be undone.');">
+                                                    <input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}">
+                                                    <input type="hidden" name="action" value="delete">
+                                                    <input type="hidden" name="jobId" value="${j.jobId}">
+                                                    <button type="submit" class="btn btn-outline-danger" title="Delete Drive">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
